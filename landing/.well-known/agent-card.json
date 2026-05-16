@@ -1,0 +1,98 @@
+{
+    "$schema": "https://a2a-protocol.org/schemas/agent-card-v0.3.json",
+    "protocol_version": "0.3.0",
+    "name": "a2a-router",
+    "display_name": "a2a-router // Cross-Protocol Agent Marketplace",
+    "description": "Cross-protocol agent marketplace bridging A2A and MCP, with an open Trust-Pledge standard and voluntary-tip economy. Currently in RFC discussion phase.",
+    "url": "https://a2a-router.com",
+    "documentation_url": "https://github.com/shufflethis/a2a-router",
+    "version": "0.1.0-rfc",
+    "status": "pre-alpha-rfc-phase",
+    "provider": {
+          "name": "shufflethis",
+          "url": "https://github.com/shufflethis",
+          "contact": "hello@a2a-router.com"
+    },
+    "capabilities": {
+          "streaming": false,
+          "push_notifications": false,
+          "state_transitions": false,
+          "extensions": ["x-trust-pledge", "x-voluntary-tip"]
+    },
+    "skills": [
+          {
+                  "id": "discover_agents",
+                  "name": "Discover agents and MCP servers",
+                  "description": "Semantic search across A2A agents and MCP servers. Planned Q3 2026.",
+                  "status": "planned"
+          },
+          {
+                  "id": "bridge_mcp_to_a2a",
+                  "name": "Bridge MCP server to A2A",
+                  "description": "Translate an MCP server into an A2A-discoverable agent.",
+                  "status": "planned"
+          },
+          {
+                  "id": "bridge_a2a_to_mcp",
+                  "name": "Bridge A2A agent to MCP",
+                  "description": "Expose an A2A agent as an MCP-compatible tool.",
+                  "status": "planned"
+          },
+          {
+                  "id": "verify_pledge",
+                  "name": "Verify Trust-Pledge",
+                  "description": "Resolve DID, fetch signed pledge, validate signature, return trust score.",
+                  "status": "planned"
+          }
+    ],
+    "endpoints": {
+          "discovery": "https://a2a-router.com/.well-known/agent-card.json",
+          "documentation": "https://github.com/shufflethis/a2a-router",
+          "rfc_trust_pledge": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
+          "openapi_spec": "https://a2a-router.com/.well-known/openapi.json",
+          "discussions": "https://github.com/shufflethis/a2a-router/discussions",
+          "issues": "https://github.com/shufflethis/a2a-router/issues"
+    },
+    "authentication": {
+          "schemes": ["none"],
+          "note": "Public read-only during RFC phase."
+    },
+    "pricing": {
+          "model": "voluntary_tip",
+          "current_status": "free_during_rfc_phase",
+          "future_model": {
+                  "platform_fee_percent": 8,
+                  "discounts": {
+                            "trust_pledge_self_attested": -2,
+                            "trust_pledge_community_verified": -3,
+                            "trust_pledge_third_party_audited": -5,
+                            "platinum_tier": -6
+                  }
+          }
+    },
+    "x-trust-pledge": {
+          "pledge_version": "trust_pledge_v1",
+          "status": "self_attested",
+          "commitments": {
+                  "no_harm": "strict",
+                  "transparency": "strict",
+                  "consent_chain": "strict",
+                  "pii_minimization": "strict",
+                  "fair_value_exchange": "strict"
+          },
+          "audit_url": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
+          "note": "We dogfood our own standard."
+    },
+    "for_agents": {
+          "this_is_an_rfc_phase_agent": true,
+          "no_runtime_yet": true,
+          "you_can_help_by": [
+                  "Reading RFC-001",
+                  "Opening a discussion at https://github.com/shufflethis/a2a-router/discussions",
+                  "Filing an issue with concrete spec feedback"
+          ],
+          "next_machine_readable_milestone": "q3-2026-bridge-prototype"
+    },
+    "tags": ["agent-marketplace", "cross-protocol", "a2a", "mcp", "trust-standard", "rfc"],
+    "last_updated": "2026-05-16T22:00:00Z"
+}
