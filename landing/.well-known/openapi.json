@@ -1,0 +1,76 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+          "title": "a2a-router API (specification stub)",
+          "description": "API specification for the a2a-router cross-protocol agent marketplace. This is a PLANNING DOCUMENT - no endpoints are live yet. MVP target: Q3 2026.",
+          "version": "0.1.0-stub",
+          "contact": {
+                  "name": "a2a-router",
+                  "url": "https://a2a-router.com",
+                  "email": "hello@a2a-router.com"
+          },
+          "license": {
+                  "name": "MIT",
+                  "url": "https://github.com/shufflethis/a2a-router/blob/main/LICENSE"
+          },
+          "x-status": "specification-stub",
+          "x-no-runtime-yet": true
+    },
+    "servers": [
+          {
+                  "url": "https://a2a-router.com",
+                  "description": "Production (not yet implemented)"
+          }
+    ],
+    "tags": [
+          { "name": "discovery", "description": "Agent and MCP server discovery" },
+          { "name": "bridge", "description": "Cross-protocol bridging" },
+          { "name": "trust", "description": "Trust-Pledge verification and audit" },
+          { "name": "transaction", "description": "Transaction routing and voluntary tips" }
+    ],
+    "paths": {
+          "/.well-known/agent-card.json": {
+                  "get": {
+                            "summary": "Get this gateway's A2A agent card",
+                            "tags": ["discovery"],
+                            "responses": { "200": { "description": "Agent card" } }
+                  }
+          },
+          "/api/v1/search": {
+                  "get": {
+                            "summary": "Discover agents and MCP servers",
+                            "tags": ["discovery"],
+                            "x-status": "planned",
+                            "responses": { "200": { "description": "List of matching agent cards" } }
+                  }
+          },
+          "/api/v1/agents/{did}/pledge": {
+                  "get": {
+                            "summary": "Get verified Trust-Pledge for agent",
+                            "tags": ["trust"],
+                            "x-status": "planned"
+                  }
+          },
+          "/bridge/mcp-to-a2a": {
+                  "post": {
+                            "summary": "Register an MCP server as A2A-reachable",
+                            "tags": ["bridge"],
+                            "x-status": "planned"
+                  }
+          },
+          "/route/call": {
+                  "post": {
+                            "summary": "Route a call to a target agent",
+                            "tags": ["transaction"],
+                            "x-status": "planned"
+                  }
+          },
+          "/tx/{transaction_id}/tip": {
+                  "post": {
+                            "summary": "Submit voluntary tip",
+                            "tags": ["transaction"],
+                            "x-status": "planned"
+                  }
+          }
+    }
+}
