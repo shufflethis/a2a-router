@@ -1,0 +1,42 @@
+{
+    "$schema": "https://modelcontextprotocol.io/schema/v1/server-manifest.json",
+    "name": "a2a-router",
+    "display_name": "a2a-router MCP Bridge",
+    "description": "MCP server interface for a2a-router. Allows MCP-first clients to discover and interact with A2A agents through a unified protocol. Specification stub - implementation planned Q3 2026.",
+    "version": "0.1.0-stub",
+    "status": "specification-stub",
+    "homepage": "https://a2a-router.com",
+    "repository": "https://github.com/shufflethis/a2a-router",
+    "documentation": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
+    "provider": {
+          "name": "shufflethis",
+          "contact": "hello@a2a-router.com"
+    },
+    "transport": ["stdio", "sse", "streamable-http"],
+    "tools": [
+          {
+                  "name": "discover_agents",
+                  "description": "Search for A2A agents and MCP servers by capability.",
+                  "status": "planned"
+          },
+          {
+                  "name": "verify_trust_pledge",
+                  "description": "Resolve agent DID, fetch signed Trust-Pledge, verify signature.",
+                  "status": "planned"
+          },
+          {
+                  "name": "bridge_agent",
+                  "description": "Cross-protocol bridge call.",
+                  "status": "planned"
+          }
+    ],
+    "x-installation": {
+          "current_status": "not_installable_yet",
+          "future_install_command": "npx -y @a2a-router/mcp-bridge",
+          "available_in": "Q3 2026"
+    },
+    "x-trust-pledge": {
+          "see": "https://a2a-router.com/.well-known/agent-card.json"
+    },
+    "tags": ["mcp", "a2a-bridge", "agent-discovery", "trust-verification", "rfc"]
+}
