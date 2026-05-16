@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>a2a-router // post-discovery infrastructure for agent economies</title>
+<meta name="description" content="Cross-protocol agent marketplace bridging A2A and MCP. Open Trust-Pledge standard. Voluntary-tip economy. The infrastructure layer agents actually need.">
+<meta property="og:title" content="a2a-router // what happens AFTER discovery">
+<meta property="og:description" content="17K+ MCP servers. 37K+ on-chain agents. Discovery is solved. Trust is not. We're building the after-layer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,500;1,9..144,900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0a0e27;
+    --bg-deep: #050813;
+    --cobalt: #1e2dd4;
+    --cobalt-bright: #4361ff;
+    --magenta: #ff006e;
+    --acid: #f5ff3d;
+    --acid-dim: #c5cf00;
+    --cream: #fff8e7;
+    --cream-dim: #d4cdb8;
+    --ink: #050813;
+    --border-thick: 3px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    line-height: 1.5;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: -10%;
+    background-image: repeating-linear-gradient(135deg, transparent 0, transparent 80px, rgba(245, 255, 61, 0.03) 80px, rgba(245, 255, 61, 0.03) 82px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.ticker {
+    background: var(--acid);
+    color: var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 6px 0;
+    border-bottom: var(--border-thick) solid var(--ink);
+    overflow: hidden;
+    position: relative;
+    z-index: 50;
+}
+
+.ticker-track {
+    display: flex;
+    gap: 64px;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    width: max-content;
+}
+
+.ticker-item::before {
+    content: '◆ ';
+    color: var(--magenta);
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg);
+    border-bottom: var(--border-thick) solid var(--cream);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--magenta);
+    border: 2px solid var(--cream);
+    transform: rotate(45deg);
+    position: relative;
+}
+
+.logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--acid);
+}
+
+.logo .slash { color: var(--magenta); }
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.nav-links a {
+    transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--acid); }
+
+.nav-cta {
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 2px solid var(--cream);
+    box-shadow: 6px 6px 0 var(--cobalt);
+    transition: all 0.15s;
+}
+
+.nav-cta:hover {
+    box-shadow: 3px 3px 0 var(--cobalt);
+    transform: translate(3px, 3px);
+}
+
+.hero {
+    padding: 80px 40px 60px;
+    position: relative;
+    z-index: 10;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--acid);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hero-meta::before {
+    content: '';
+    width: 60px;
+    height: 2px;
+    background: var(--acid);
+}
+
+.hero-meta .live {
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 2px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hero-meta .live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--acid);
+    border-radius: 50%;
+    animation: blink 1.4s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.3; }
+}
+
+.hero-headline {
+    font-size: clamp(56px, 11vw, 180px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    margin-bottom: 32px;
+    color: var(--cream);
+}
+
+.hero-headline .line {
+    display: block;
+    animation: rise 0.8s ease-out both;
+}
+
+.hero-headline .line:nth-child(1) { animation-delay: 0.05s; }
+.hero-headline .line:nth-child(2) { animation-delay: 0.15s; }
+.hero-headline .line:nth-child(3) { animation-delay: 0.25s; }
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-headline .italic {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--acid);
+}
+
+.hero-headline .strike {
+    position: relative;
+    color: var(--cream-dim);
+}
+
+.hero-headline .strike::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -2%;
+    right: -2%;
+    height: 6px;
+    background: var(--magenta);
+    transform: rotate(-2deg);
+}
+
+.hero-headline .mark {
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 0 16px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    margin: 0 8px;
+}
+
+.hero-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--cream);
+    max-width: 720px;
+    margin-bottom: 56px;
+    font-weight: 400;
+    border-left: var(--border-thick) solid var(--acid);
+    padding-left: 24px;
+    animation: rise 0.8s ease-out 0.4s both;
+}
+
+.hero-sub strong {
+    background: var(--acid);
+    color: var(--ink);
+    padding: 2px 8px;
+    font-weight: 700;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: rise 0.8s ease-out 0.5s both;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 3px solid;
+    transition: all 0.15s;
+}
+
+.btn-primary {
+    background: var(--acid);
+    color: var(--ink);
+    border-color: var(--ink);
+    box-shadow: 8px 8px 0 var(--magenta);
+}
+
+.btn-primary:hover {
+    box-shadow: 4px 4px 0 var(--magenta);
+    transform: translate(4px, 4px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border-color: var(--cream);
+    box-shadow: 8px 8px 0 var(--cobalt-bright);
+}
+
+.btn-secondary:hover {
+    box-shadow: 4px 4px 0 var(--cobalt-bright);
+    transform: translate(4px, 4px);
+}
+
+.btn .arrow {
+    font-size: 18px;
+    transition: transform 0.15s;
+}
+
+.btn:hover .arrow {
+    transform: translateX(4px);
+}
+
+.stats-bar {
+    background: var(--ink);
+    border-top: var(--border-thick) solid var(--cream);
+    border-bottom: var(--border-thick) solid var(--cream);
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    position: relative;
+    z-index: 10;
+}
+
+.stat-item {
+    border-left: 4px solid var(--acid);
+    padding-left: 16px;
+}
+
+.stat-item:nth-child(2) { border-color: var(--magenta); }
+.stat-item:nth-child(3) { border-color: var(--cobalt-bright); }
+.stat-item:nth-child(4) { border-color: var(--cream); }
+
+.stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.03em;
+}
+
+.stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 8px;
+}
+
+section {
+    padding: 120px 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.section-marker {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 32px;
+    padding: 6px 14px;
+    background: var(--magenta);
+    color: var(--cream);
+    transform: rotate(-1deg);
+}
+
+.section-title {
+    font-size: clamp(36px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 32px;
+    max-width: 1100px;
+}
+
+.section-title .italic {
+    font-style: italic;
+    color: var(--acid);
+    font-weight: 500;
+}
+
+.section-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    color: var(--cream-dim);
+    max-width: 640px;
+    margin-bottom: 72px;
+    line-height: 1.7;
+}
+
+.gap-section {
+    background: var(--cobalt);
+    color: var(--cream);
+}
+
+.gap-section .section-marker {
+    background: var(--acid);
+    color: var(--ink);
+}
+
+.gap-visual {
+    margin-top: 56px;
+    display: grid;
+    gap: 24px;
+}
+
+.gap-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: center;
+    border-top: 2px solid rgba(255, 248, 231, 0.2);
+    padding-top: 24px;
+}
+
+.gap-row:last-child {
+    border-bottom: 2px solid rgba(255, 248, 231, 0.2);
+    padding-bottom: 24px;
+}
+
+.gap-row-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+}
+
+.gap-row-flow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.gap-box {
+    padding: 14px 24px;
+    background: rgba(255, 248, 231, 0.1);
+    border: 2px solid var(--cream);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.gap-box.empty {
+    border-style: dashed;
+    border-color: var(--magenta);
+    color: var(--magenta);
+    background: transparent;
+}
+
+.gap-box.ours {
+    background: var(--acid);
+    color: var(--ink);
+    border-color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.gap-arrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    color: var(--acid);
+    font-weight: 700;
+}
+
+.quote-block {
+    margin-top: 64px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 40px;
+    position: relative;
+    max-width: 800px;
+    box-shadow: 12px 12px 0 var(--acid);
+}
+
+.quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 24px;
+    font-size: 200px;
+    font-family: 'Fraunces', serif;
+    color: var(--magenta);
+    line-height: 1;
+    font-weight: 900;
+}
+
+.quote-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 16px;
+}
+
+.quote-cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+}
+
+.pillars-section {
+    background: var(--bg);
+}
+
+.pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin-top: 64px;
+}
+
+.pillar {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 40px 32px;
+    border: var(--border-thick) solid var(--ink);
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.pillar:nth-child(1) { box-shadow: 12px 12px 0 var(--magenta); }
+.pillar:nth-child(2) {
+    box-shadow: 12px 12px 0 var(--acid);
+    transform: translateY(20px);
+}
+.pillar:nth-child(3) { box-shadow: 12px 12px 0 var(--cobalt-bright); }
+
+.pillar:hover { transform: translateY(-4px); }
+.pillar:nth-child(2):hover { transform: translateY(16px); }
+
+.pillar-tag {
+    position: absolute;
+    top: -16px;
+    left: 24px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 6px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+}
+
+.pillar-num {
+    font-family: 'Fraunces', serif;
+    font-size: 80px;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    color: var(--magenta);
+    margin-bottom: 16px;
+}
+
+.pillar:nth-child(2) .pillar-num { color: var(--cobalt); }
+.pillar:nth-child(3) .pillar-num { color: var(--acid-dim); }
+
+.pillar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+}
+
+.pillar-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.pillar-features {
+    list-style: none;
+    border-top: 2px dashed var(--ink);
+    padding-top: 20px;
+}
+
+.pillar-features li {
+    padding: 8px 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+.pillar-features li::before {
+    content: '◆';
+    color: var(--magenta);
+    flex-shrink: 0;
+}
+
+.pledge-section {
+    background: var(--acid);
+    color: var(--ink);
+}
+
+.pledge-section .section-marker {
+    background: var(--ink);
+    color: var(--acid);
+}
+
+.pledge-section .section-title { color: var(--ink); }
+.pledge-section .section-title .italic { color: var(--magenta); }
+
+.pledge-section .section-sub {
+    color: var(--ink);
+    opacity: 0.85;
+}
+
+.pledge-layout {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.commitments-list {
+    display: grid;
+    gap: 0;
+    border-top: var(--border-thick) solid var(--ink);
+}
+
+.commitment {
+    padding: 24px 0;
+    border-bottom: var(--border-thick) solid var(--ink);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    transition: padding 0.2s;
+    cursor: pointer;
+}
+
+.commitment:hover {
+    padding-left: 16px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.commitment-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.9;
+    color: var(--magenta);
+}
+
+.commitment-content h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.commitment-content p {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+    opacity: 0.75;
+}
+
+.pledge-code {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    border: var(--border-thick) solid var(--ink);
+    box-shadow: 12px 12px 0 var(--magenta);
+    overflow-x: auto;
+    position: relative;
+}
+
+.pledge-code::before {
+    content: 'trust-pledge.json';
+    position: absolute;
+    top: -16px;
+    left: 24px;
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pledge-code .key { color: var(--acid); }
+.pledge-code .string { color: var(--magenta); font-weight: 700; }
+.pledge-code .comment { color: var(--cream-dim); font-style: italic; }
+.pledge-code .punct { color: var(--cream); }
+
+.how-section {
+    background: var(--bg-deep);
+}
+
+.how-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.how-step {
+    background: linear-gradient(135deg, rgba(67, 97, 255, 0.1) 0%, rgba(255, 0, 110, 0.05) 100%);
+    padding: 40px 32px;
+    border: 2px solid var(--cream);
+    position: relative;
+    overflow: hidden;
+}
+
+.how-step::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: var(--acid);
+    border: 2px solid var(--cream);
+    transform: rotate(45deg);
+    opacity: 0.15;
+}
+
+.how-step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--acid);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.how-step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 8px;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+}
+
+.how-step-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--magenta);
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 10px;
+    display: inline-block;
+}
+
+.how-step-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+}
+
+.status-section {
+    background: var(--magenta);
+    color: var(--cream);
+}
+
+.status-section .section-marker {
+    background: var(--acid);
+    color: var(--ink);
+}
+
+.timeline {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--border-thick) solid var(--cream);
+    border-bottom: var(--border-thick) solid var(--cream);
+}
+
+.phase {
+    padding: 32px 24px;
+    border-right: 2px solid var(--cream);
+    position: relative;
+    transition: background 0.2s;
+}
+
+.phase:last-child { border-right: none; }
+
+.phase:hover {
+    background: rgba(255, 248, 231, 0.1);
+}
+
+.phase-quarter {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    margin-bottom: 8px;
+}
+
+.phase-status {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: 1.5px solid var(--cream);
+    margin-bottom: 24px;
+}
+
+.phase.active .phase-status {
+    background: var(--acid);
+    color: var(--ink);
+    border-color: var(--acid);
+}
+
+.phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.phase-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.85;
+}
+
+.final-section {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+    padding: 160px 40px 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.final-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(-45deg, transparent 0, transparent 200px, rgba(255, 0, 110, 0.05) 200px, rgba(255, 0, 110, 0.05) 202px);
+    pointer-events: none;
+}
+
+.final-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(48px, 9vw, 140px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+}
+
+.final-headline .italic {
+    font-style: italic;
+    color: var(--acid);
+    font-weight: 500;
+}
+
+.final-headline .mark {
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 0 24px;
+    display: inline-block;
+    transform: rotate(-1.5deg);
+}
+
+.final-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: var(--cream-dim);
+    max-width: 600px;
+    margin: 0 auto 56px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+
+.final-cta-row {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+footer {
+    background: var(--ink);
+    border-top: var(--border-thick) solid var(--acid);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--cream-dim);
+}
+
+.footer-brand strong { color: var(--acid); }
+
+.footer-links {
+    display: flex;
+    gap: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.footer-links a {
+    transition: color 0.15s;
+}
+
+.footer-links a:hover { color: var(--magenta); }
+
+@media (max-width: 900px) {
+    .pledge-layout, .how-grid { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .phase {
+        border-right: none;
+        border-bottom: 2px solid var(--cream);
+    }
+    .pillar:nth-child(2) { transform: none; }
+}
+
+@media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    section, .hero, footer, .stats-bar { padding-left: 20px; padding-right: 20px; }
+    .timeline { grid-template-columns: 1fr; }
+    .gap-row { grid-template-columns: 1fr; gap: 12px; }
+    .quote-block::before { font-size: 120px; top: -20px; }
+    .quote-text { font-size: 20px; }
+    .pillar:nth-child(2) { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+    <div class="ticker-track">
+        <span class="ticker-item">RFC-001 PUBLIC DISCUSSION</span>
+        <span class="ticker-item">TRUST-PLEDGE / CC BY 4.0</span>
+        <span class="ticker-item">CROSS-PROTOCOL A2A ⇄ MCP</span>
+        <span class="ticker-item">VOLUNTARY-TIP ECONOMY</span>
+        <span class="ticker-item">17.000+ MCP SERVERS / 37.000+ ON-CHAIN AGENTS</span>
+        <span class="ticker-item">POST-DISCOVERY INFRASTRUCTURE</span>
+        <span class="ticker-item">RFC-001 PUBLIC DISCUSSION</span>
+        <span class="ticker-item">TRUST-PLEDGE / CC BY 4.0</span>
+        <span class="ticker-item">CROSS-PROTOCOL A2A ⇄ MCP</span>
+        <span class="ticker-item">VOLUNTARY-TIP ECONOMY</span>
+        <span class="ticker-item">17.000+ MCP SERVERS / 37.000+ ON-CHAIN AGENTS</span>
+        <span class="ticker-item">POST-DISCOVERY INFRASTRUCTURE</span>
+    </div>
+</div>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-mark"></div>
+        a2a<span class="slash">/</span>router
+    </a>
+    <div class="nav-links">
+        <a href="#gap">The Gap</a>
+        <a href="#pillars">Approach</a>
+        <a href="#pledge">Pledge</a>
+        <a href="#status">Status</a>
+    </div>
+    <a href="https://github.com/shufflethis/a2a-router" class="nav-cta">Github →</a>
+</nav>
+
+<section class="hero">
+    <div class="hero-meta">
+        <span class="live">● LIVE RFC</span>
+        <span>v0.1 / 16.05.2026</span>
+        <span>Built in the open</span>
+    </div>
+
+    <h1 class="hero-headline">
+        <span class="line">Discovery</span>
+        <span class="line">is <span class="italic">solved.</span></span>
+        <span class="line"><span class="strike">Trust</span><span class="mark">isn't.</span></span>
+    </h1>
+
+    <p class="hero-sub">
+        17.000+ MCP servers. 37.000+ on-chain agents. The agent ecosystem doesn't need
+        another registry — it needs <strong>cross-protocol bridging</strong>,
+        <strong>verifiable trust signals</strong>, and a <strong>settlement layer</strong>
+        that works between machines.
+    </p>
+
+    <div class="hero-cta">
+        <a href="#pledge" class="btn btn-primary">Read the manifesto <span class="arrow">↘</span></a>
+        <a href="https://github.com/shufflethis/a2a-router" class="btn btn-secondary">See on Github <span class="arrow">→</span></a>
+    </div>
+</section>
+
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-num">A2A ⇄ MCP</div>
+        <div class="stat-label">Cross-protocol bridge</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">5 / 3</div>
+        <div class="stat-label">Commitments / audit tiers</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">CC BY 4.0</div>
+        <div class="stat-label">Open standard, no lock-in</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">Q3 '26</div>
+        <div class="stat-label">First reference impl</div>
+    </div>
+</div>
+
+<section class="gap-section" id="gap">
+    <span class="section-marker">01 // The Problem</span>
+    <h2 class="section-title">Everyone built the directory.<br>Nobody built <span class="italic">what comes after.</span></h2>
+    <p class="section-sub" style="color: rgba(255, 248, 231, 0.85);">
+        Discovery is commoditized. The interesting questions are about trust, routing,
+        and settlement between agents — and nobody is solving those well.
+    </p>
+
+    <div class="gap-visual">
+        <div class="gap-row">
+            <span class="gap-row-label">Existing<br>marketplaces</span>
+            <div class="gap-row-flow">
+                <span class="gap-box">Discovery ✓</span>
+                <span class="gap-arrow">→</span>
+                <span class="gap-box empty">??? trust ???</span>
+                <span class="gap-arrow">→</span>
+                <span class="gap-box empty">??? settle ???</span>
+            </div>
+        </div>
+        <div class="gap-row">
+            <span class="gap-row-label">a2a/router<br>approach</span>
+            <div class="gap-row-flow">
+                <span class="gap-box ours">Discovery</span>
+                <span class="gap-arrow">→</span>
+                <span class="gap-box ours">Trust-Pledge</span>
+                <span class="gap-arrow">→</span>
+                <span class="gap-box ours">Voluntary-Tip</span>
+                <span class="gap-arrow">→</span>
+                <span class="gap-box ours">Settle</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <p class="quote-text">the harder problem is what happens after discovery.</p>
+        <p class="quote-cite">— @srotzin / A2A Community Discussion #741</p>
+    </div>
+</section>
+
+<section class="pillars-section" id="pillars">
+    <span class="section-marker">02 // The Approach</span>
+    <h2 class="section-title">Three primitives.<br><span class="italic">One router.</span></h2>
+    <p class="section-sub">
+        Each addresses a gap nobody closes well today. Together they form
+        the infrastructure layer the agent economy actually needs.
+    </p>
+
+    <div class="pillars">
+        <div class="pillar">
+            <div class="pillar-tag">01 / Bridge</div>
+            <div class="pillar-num">⇄</div>
+            <h3 class="pillar-title">Cross-Protocol Bridge</h3>
+            <p class="pillar-desc">
+                Translate transparently between A2A (Google) and MCP (Anthropic).
+                Register once, be reachable from both ecosystems.
+            </p>
+            <ul class="pillar-features">
+                <li>MCP → A2A: auto-generated Agent Cards</li>
+                <li>A2A → MCP: npm bridge, stdio-compatible</li>
+                <li>DID-based portable identity</li>
+                <li>Stateless translation layer</li>
+            </ul>
+        </div>
+
+        <div class="pillar">
+            <div class="pillar-tag">02 / Trust</div>
+            <div class="pillar-num">✓</div>
+            <h3 class="pillar-title">Trust-Pledge Standard</h3>
+            <p class="pillar-desc">
+                An open, cryptographically signed commitment framework.
+                Published CC BY 4.0 so any registry can adopt it.
+            </p>
+            <ul class="pillar-features">
+                <li>5 commitments / 3 audit tiers</li>
+                <li>ed25519 signatures, DID-resolvable</li>
+                <li>Trust Ledger (CT-style append-only)</li>
+                <li>Reputation = behavior + audit + community</li>
+            </ul>
+        </div>
+
+        <div class="pillar">
+            <div class="pillar-tag">03 / Settle</div>
+            <div class="pillar-num">$</div>
+            <h3 class="pillar-title">Voluntary-Tip Economy</h3>
+            <p class="pillar-desc">
+                Pay-what-you-want. Agents tip agents based on perceived value.
+                Reduced platform fees for pledged participants.
+            </p>
+            <ul class="pillar-features">
+                <li>Default = voluntary tip + suggested value</li>
+                <li>Pledged: 5% / Audited: 3% / Standard: 8%</li>
+                <li>Stripe Connect (USDC optional)</li>
+                <li>Skip with reason — no pressure tactics</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="pledge-section" id="pledge">
+    <span class="section-marker">03 // The Standard</span>
+    <h2 class="section-title">Five commitments.<br><span class="italic">Cryptographically signed.</span></h2>
+    <p class="section-sub">
+        Inspired by Asimov (1942), modernized for autonomous multi-agent systems.
+        Open source. Free to adopt. Built for the long run.
+    </p>
+
+    <div class="pledge-layout">
+        <div class="commitments-list">
+            <div class="commitment">
+                <span class="commitment-num">01</span>
+                <div class="commitment-content">
+                    <h4>No Harm</h4>
+                    <p>No physical, financial, or psychological harm to humans. No harm through inaction.</p>
+                </div>
+            </div>
+            <div class="commitment">
+                <span class="commitment-num">02</span>
+                <div class="commitment-content">
+                    <h4>Transparency</h4>
+                    <p>Disclose AI nature when asked. No impersonation of humans without explicit consent.</p>
+                </div>
+            </div>
+            <div class="commitment">
+                <span class="commitment-num">03</span>
+                <div class="commitment-content">
+                    <h4>Consent Chain</h4>
+                    <p>Actions traceable to human consent. JWT-propagation through agent chains.</p>
+                </div>
+            </div>
+            <div class="commitment">
+                <span class="commitment-num">04</span>
+                <div class="commitment-content">
+                    <h4>PII Minimization</h4>
+                    <p>No PII retention beyond task. Right to deletion. GDPR-aligned by design.</p>
+                </div>
+            </div>
+            <div class="commitment">
+                <span class="commitment-num">05</span>
+                <div class="commitment-content">
+                    <h4>Fair Value Exchange</h4>
+                    <p>Realistic tip suggestions. No bait-and-switch. Quality matches advertisement.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pledge-code">
+<span class="comment">// agent-card.json (excerpt)</span>
+<span class="punct">{</span>
+  <span class="key">"agent_did"</span><span class="punct">:</span> <span class="string">"did:web:example.com"</span><span class="punct">,</span>
+  <span class="key">"pledge_version"</span><span class="punct">:</span> <span class="string">"trust_pledge_v1"</span><span class="punct">,</span>
+  <span class="key">"commitments"</span><span class="punct">: {</span>
+    <span class="key">"no_harm"</span><span class="punct">: { </span><span class="key">"level"</span><span class="punct">: </span><span class="string">"strict"</span><span class="punct"> },</span>
+    <span class="key">"transparency"</span><span class="punct">: { </span><span class="key">"level"</span><span class="punct">: </span><span class="string">"strict"</span><span class="punct"> },</span>
+    <span class="key">"consent_chain"</span><span class="punct">: { </span><span class="key">"level"</span><span class="punct">: </span><span class="string">"strict"</span><span class="punct"> },</span>
+    <span class="key">"pii_minimization"</span><span class="punct">: { </span><span class="key">"level"</span><span class="punct">: </span><span class="string">"strict"</span><span class="punct"> },</span>
+    <span class="key">"fair_value_exchange"</span><span class="punct">: { </span><span class="key">"level"</span><span class="punct">: </span><span class="string">"strict"</span><span class="punct"> }</span>
+  <span class="punct">},</span>
+  <span class="key">"signature"</span><span class="punct">: {</span>
+    <span class="key">"algorithm"</span><span class="punct">: </span><span class="string">"ed25519"</span><span class="punct">,</span>
+    <span class="key">"value"</span><span class="punct">: </span><span class="string">"base58:5h2k9..."</span>
+  <span class="punct">}</span>
+<span class="punct">}</span>
+        </div>
+    </div>
+</section>
+
+<section class="how-section">
+    <span class="section-marker">04 // How it works</span>
+    <h2 class="section-title">From request to settlement,<br><span class="italic">in four primitives.</span></h2>
+
+    <div class="how-grid">
+        <div class="how-step">
+            <span class="how-step-num">Step 01 ◆ Discover</span>
+            <h3 class="how-step-title">Semantic search across protocols</h3>
+            <div class="how-step-code">GET /api/v1/search</div>
+            <p class="how-step-desc">
+                Filter by skills, trust tier, pricing, latency. Vector-DB-backed,
+                sub-100ms. Returns both A2A agents and bridged MCP servers.
+            </p>
+        </div>
+        <div class="how-step">
+            <span class="how-step-num">Step 02 ◆ Verify</span>
+            <h3 class="how-step-title">Resolve DID, verify signature</h3>
+            <div class="how-step-code">verify_pledge()</div>
+            <p class="how-step-desc">
+                Fetch signed Trust-Pledge, validate ed25519 signature.
+                Check audit tier, recent violations, trust score before proceeding.
+            </p>
+        </div>
+        <div class="how-step">
+            <span class="how-step-num">Step 03 ◆ Route</span>
+            <h3 class="how-step-title">Transparent protocol bridge</h3>
+            <div class="how-step-code">POST /route/call</div>
+            <p class="how-step-desc">
+                Rust-backed router. Consent-chain JWT propagation.
+                Measures latency, quality, success rate per transaction.
+            </p>
+        </div>
+        <div class="how-step">
+            <span class="how-step-num">Step 04 ◆ Settle</span>
+            <h3 class="how-step-title">Voluntary tip / skip with reason</h3>
+            <div class="how-step-code">POST /tx/.../tip</div>
+            <p class="how-step-desc">
+                Tip with suggested value, or skip with reason code.
+                Stripe Connect payout. Trust score updates based on behavior.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="status-section" id="status">
+    <span class="section-marker">05 // Status</span>
+    <h2 class="section-title">Pre-Alpha.<br><span class="italic">Open spec phase.</span></h2>
+    <p class="section-sub" style="color: rgba(255, 248, 231, 0.85);">
+        We publish specifications before code. The Trust-Pledge is in public review.
+        Reference implementation begins Q3 2026.
+    </p>
+
+    <div class="timeline">
+        <div class="phase active">
+            <div class="phase-quarter">Q2 2026</div>
+            <span class="phase-status">● ACTIVE NOW</span>
+            <h3 class="phase-title">RFC Discussion</h3>
+            <p class="phase-desc">
+                Trust-Pledge spec in public review. Architecture draft live.
+                Community input on schema and audit methodology welcomed.
+            </p>
+        </div>
+        <div class="phase">
+            <div class="phase-quarter">Q3 2026</div>
+            <span class="phase-status">Planned</span>
+            <h3 class="phase-title">Discovery MVP</h3>
+            <p class="phase-desc">
+                Bridge layer prototype. First 100 registered agents.
+                SDK in Python + TypeScript. Vector search live.
+            </p>
+        </div>
+        <div class="phase">
+            <div class="phase-quarter">Q4 2026</div>
+            <span class="phase-status">Planned</span>
+            <h3 class="phase-title">Public Beta</h3>
+            <p class="phase-desc">
+                Transaction router live. Stripe Connect integration.
+                First third-party auditors accredited and operating.
+            </p>
+        </div>
+        <div class="phase">
+            <div class="phase-quarter">Q1 2027</div>
+            <span class="phase-status">Vision</span>
+            <h3 class="phase-title">Cross-Registry Adoption</h3>
+            <p class="phase-desc">
+                Trust-Pledge recognized by other registries.
+                Standards body discussion (Linux Foundation candidate).
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="final-section">
+    <h2 class="final-headline">
+        Building <span class="italic">after-discovery</span><br>
+        <span class="mark">infrastructure?</span>
+    </h2>
+    <p class="final-sub">
+        We're looking for A2A contributors, AI safety researchers, and
+        agent-economy builders. The spec is open. Critique is welcome.
+    </p>
+    <div class="final-cta-row">
+        <a href="mailto:hello@a2a-router.com" class="btn btn-primary">Get in touch <span class="arrow">↘</span></a>
+        <a href="https://github.com/shufflethis/a2a-router/discussions" class="btn btn-secondary">Join discussion <span class="arrow">→</span></a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-brand">
+        © 2026 <strong>a2a/router</strong> — Built in the open from Florianópolis ◆ Made with patience
+    </div>
+    <div class="footer-links">
+        <a href="https://github.com/shufflethis/a2a-router">Github</a>
+        <a href="https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md">RFC-001</a>
+        <a href="mailto:hello@a2a-router.com">Contact</a>
+    </div>
+</footer>
+
+</body>
+</html>

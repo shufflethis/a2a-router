@@ -1,0 +1,38 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//a2a-router//Konkurrenz-Recherche-Sprint//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:a2a-router-sprint-tonight-20260516@famefact.com
+DTSTAMP:20260516T160000Z
+DTSTART:20260516T190000
+DTEND:20260516T213000
+SUMMARY:a2a-router Konkurrenz-Recherche-Sprint
+LOCATION:Schreibtisch / DND an
+DESCRIPTION:Hartes 2\,5h Time-Boxing — 5 Plattformen + Konsolidierung.\n\n• 30 Min — Smithery (smithery.ai)\n• ☕ 5 Min Pause\n• 30 Min — Composio (composio.dev)\n• ☕ 5 Min Pause\n• 20 Min — Glama (glama.ai)\n• 15 Min — MCPize (mcpize.com)\n• 15 Min — A2A GitHub Discussion #741\n• 30 Min — Konsolidierung im XLSX-Tracker\n\nAlle Files: ~/a2a-router/a2a-router-research/\n\nRegel: Wenn Timer klingelt → nächste Plattform. Auch wenn nicht fertig.
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:Sprint startet in 10 Min — DND an\, Slack zu\, Wasser ans Pult.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a2a-router-sprint-tomorrow-20260517@famefact.com
+DTSTAMP:20260516T160000Z
+DTSTART:20260517T090000
+DTEND:20260517T113000
+SUMMARY:a2a-router Konkurrenz-Recherche-Sprint (Alternativ-Slot)
+LOCATION:Schreibtisch / DND an
+DESCRIPTION:Backup-Slot falls heute Abend nicht klappt. Eine der beiden Instanzen bitte nach Wahl löschen.\n\nGleiche Struktur:\n• 30 Min Smithery / 5 Pause / 30 Min Composio / 5 Pause\n• 20 Min Glama / 15 Min MCPize / 15 Min A2A GitHub\n• 30 Min Konsolidierung
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:Sprint startet in 10 Min — DND an\, Slack zu.
+END:VALARM
+END:VEVENT
+END:VCALENDAR

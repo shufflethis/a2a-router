@@ -1,0 +1,44 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+
+# Rust
+target/
+Cargo.lock
+
+# Build outputs
+dist/
+build/
+*.log
+
+# Secrets — never commit
+.env.*
+*.pem
+*.key
+secrets/
+
+# Internal-only drafts and strategy docs (never push public)
+COMMENT-DRAFT.md
+INTERNAL-*.md
+*-private.md
+/internal/
+/drafts/
+notes-internal/
