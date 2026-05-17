@@ -1,0 +1,45 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:www.a2a-router.com",
+  "verificationMethod": [
+    {
+      "id": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:www.a2a-router.com",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "bMhF8fHBAqG4EF_ADiH8B6Y8tviGcZGXXi_W68Sp7Hs",
+        "kid": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17",
+        "alg": "EdDSA",
+        "use": "sig"
+      }
+    }
+  ],
+  "assertionMethod": [
+    "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17"
+  ],
+  "authentication": [
+    "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17"
+  ],
+  "service": [
+    {
+      "id": "did:web:www.a2a-router.com#website",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://www.a2a-router.com"
+    },
+    {
+      "id": "did:web:www.a2a-router.com#a2a-agent-card",
+      "type": "A2AAgentCard",
+      "serviceEndpoint": "https://www.a2a-router.com/.well-known/agent-card.json"
+    },
+    {
+      "id": "did:web:www.a2a-router.com#trust-pledge",
+      "type": "TrustPledge",
+      "serviceEndpoint": "https://www.a2a-router.com/.well-known/trust-pledge.json"
+    }
+  ]
+}

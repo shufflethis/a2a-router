@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.shufflethis/a2a-router",
+  "title": "a2a-router MCP Bridge Server",
+  "description": "Remote MCP bridge server exposing a2a-router public status, Trust-Pledge metadata, A2A invocation, and MCP tool invocation for public HTTPS targets.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/shufflethis/a2a-router",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://www.a2a-router.com/api/mcp"
+    }
+  ]
+}

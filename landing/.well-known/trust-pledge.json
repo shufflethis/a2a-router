@@ -1,0 +1,76 @@
+{
+  "pledgeVersion": "trust_pledge_v0.1",
+  "status": "self_attested",
+  "issuedAt": "2026-05-17",
+  "subject": {
+    "type": "project",
+    "did": "did:web:www.a2a-router.com",
+    "name": "a2a-router",
+    "url": "https://www.a2a-router.com",
+    "repository": "https://github.com/shufflethis/a2a-router"
+  },
+  "scope": {
+    "coveredSystems": [
+      "public website",
+      "project documentation",
+      "Trust-Pledge RFC",
+      "A2A bridge agent",
+      "A2A-to-MCP bridge router MVP",
+      "MCP-to-A2A bridge router MVP",
+      "MCP bridge server"
+    ],
+    "notCoveredYet": [
+      "authenticated agent registry",
+      "persistent routing sessions",
+      "streaming bridge transport",
+      "transaction router",
+      "Stripe Connect settlement",
+      "USDC settlement"
+    ]
+  },
+  "commitments": {
+    "noHarm": {
+      "level": "strict",
+      "text": "a2a-router will not knowingly route, recommend, or monetize agents intended to cause physical, financial, psychological, or operational harm."
+    },
+    "transparency": {
+      "level": "strict",
+      "text": "a2a-router will publish machine-readable status, protocol, trust, and limitation metadata so agents can distinguish live capabilities from planned capabilities."
+    },
+    "consentChain": {
+      "level": "strict",
+      "text": "a2a-router will design routed actions around traceable caller authorization and consent propagation before enabling third-party execution."
+    },
+    "piiMinimization": {
+      "level": "strict",
+      "text": "a2a-router will minimize personal data collection and avoid retaining PII beyond operational requirements."
+    },
+    "fairValueExchange": {
+      "level": "strict",
+      "text": "a2a-router will clearly distinguish voluntary tips, platform fees, and skipped payments, and will not misrepresent paid placement as trust."
+    }
+  },
+  "audit": {
+    "tier": "self_attested",
+    "auditor": null,
+    "nextTargetTier": "community_verified"
+  },
+  "verification": {
+    "didDocument": "https://www.a2a-router.com/.well-known/did.json",
+    "jwks": "https://www.a2a-router.com/.well-known/jwks.json",
+    "algorithm": "EdDSA",
+    "keyId": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17"
+  },
+  "references": {
+    "rfc": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
+    "architecture": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
+    "agentCard": "https://www.a2a-router.com/.well-known/agent-card.json"
+  },
+  "signature": {
+    "type": "DetachedJWS",
+    "algorithm": "EdDSA",
+    "keyId": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17",
+    "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6InRydXN0LXBsZWRnZStqd3MiLCJraWQiOiJkaWQ6d2ViOnd3dy5hMmEtcm91dGVyLmNvbSN0cnVzdC1wbGVkZ2Uta2V5LTIwMjYtMDUtMTciLCJqa3UiOiJodHRwczovL3d3dy5hMmEtcm91dGVyLmNvbS8ud2VsbC1rbm93bi9qd2tzLmpzb24ifQ",
+    "signature": "I1nT-nXghbdplX-45nedWbG1b-fwecVtj4rpON7NXSL_ZVEVme0zeOWfkySkguKsZlL6tLq12MAxPIA90LvBDg"
+  }
+}

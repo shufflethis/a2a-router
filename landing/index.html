@@ -5,8 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>a2a-router // post-discovery infrastructure for agent economies</title>
 <meta name="description" content="Cross-protocol agent marketplace bridging A2A and MCP. Open Trust-Pledge standard. Voluntary-tip economy. The infrastructure layer agents actually need.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="a2a-router">
+<meta name="keywords" content="A2A, Agent2Agent, MCP, Model Context Protocol, agent marketplace, agent trust, Trust-Pledge, agent economy, cross-protocol bridge">
+<link rel="canonical" href="https://www.a2a-router.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.a2a-router.com/">
+<meta property="og:site_name" content="a2a-router">
 <meta property="og:title" content="a2a-router // what happens AFTER discovery">
 <meta property="og:description" content="17K+ MCP servers. 37K+ on-chain agents. Discovery is solved. Trust is not. We're building the after-layer.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="a2a-router // what happens AFTER discovery">
+<meta name="twitter:description" content="Cross-protocol agent marketplace bridging A2A and MCP with verifiable trust signals and voluntary settlement.">
+<meta name="theme-color" content="#0a0e27">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.a2a-router.com/#website",
+      "name": "a2a-router",
+      "url": "https://www.a2a-router.com/",
+      "description": "Cross-protocol agent marketplace bridging A2A and MCP with a Trust-Pledge standard and voluntary-tip economy.",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://www.a2a-router.com/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.a2a-router.com/#organization",
+      "name": "a2a-router",
+      "url": "https://www.a2a-router.com/",
+      "email": "hello@a2a-router.com",
+      "sameAs": [
+        "https://github.com/shufflethis/a2a-router"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.a2a-router.com/#trust-pledge",
+      "name": "Trust-Pledge Standard",
+      "url": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "about": [
+        "Agent trust",
+        "A2A protocol",
+        "Model Context Protocol",
+        "Multi-agent systems"
+      ],
+      "description": "An open commitment framework for autonomous agents covering No-Harm, Transparency, Consent-Chain, PII-Minimization, and Fair-Value-Exchange."
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.a2a-router.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a2a-router?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "a2a-router is post-discovery infrastructure for agent economies: a live public HTTPS-only A2A/MCP bridge MVP, an open Trust-Pledge standard, and a planned voluntary-tip settlement layer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a2a-router live as a runtime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "a2a-router is live as a website, machine-readable Trust-Pledge, A2A bridge agent, and MCP bridge server. The authenticated discovery registry, streaming bridge transport, transaction router, and settlement layer are still planned."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What problem does the Trust-Pledge address?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Trust-Pledge gives agents a verifiable way to publish ethical and operational commitments, including No-Harm, Transparency, Consent-Chain, PII-Minimization, and Fair-Value-Exchange."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1047,8 +1131,8 @@ footer {
 
 <section class="hero">
     <div class="hero-meta">
-        <span class="live">● LIVE RFC</span>
-        <span>v0.1 / 16.05.2026</span>
+        <span class="live">● LIVE BRIDGE MVP</span>
+        <span>v0.1 / 17.05.2026</span>
         <span>Built in the open</span>
     </div>
 
@@ -1085,8 +1169,8 @@ footer {
         <div class="stat-label">Open standard, no lock-in</div>
     </div>
     <div class="stat-item">
-        <div class="stat-num">Q3 '26</div>
-        <div class="stat-label">First reference impl</div>
+        <div class="stat-num">LIVE</div>
+        <div class="stat-label">Public HTTPS bridge MVP</div>
     </div>
 </div>
 
@@ -1143,14 +1227,14 @@ footer {
             <div class="pillar-num">⇄</div>
             <h3 class="pillar-title">Cross-Protocol Bridge</h3>
             <p class="pillar-desc">
-                Translate transparently between A2A (Google) and MCP (Anthropic).
-                Register once, be reachable from both ecosystems.
+                Bridge public A2A JSON-RPC agents and MCP Streamable HTTP tools.
+                Registry and settlement come next; routing exists now.
             </p>
             <ul class="pillar-features">
-                <li>MCP → A2A: auto-generated Agent Cards</li>
-                <li>A2A → MCP: npm bridge, stdio-compatible</li>
+                <li>MCP → A2A: tool call to A2A SendMessage</li>
+                <li>A2A → MCP: structured SendMessage to tools/call</li>
                 <li>DID-based portable identity</li>
-                <li>Stateless translation layer</li>
+                <li>HTTPS-only targets, private networks blocked</li>
             </ul>
         </div>
 
@@ -1264,10 +1348,10 @@ footer {
         <div class="how-step">
             <span class="how-step-num">Step 01 ◆ Discover</span>
             <h3 class="how-step-title">Semantic search across protocols</h3>
-            <div class="how-step-code">GET /api/v1/search</div>
+            <div class="how-step-code">GET /.well-known/a2a-router.json</div>
             <p class="how-step-desc">
-                Filter by skills, trust tier, pricing, latency. Vector-DB-backed,
-                sub-100ms. Returns both A2A agents and bridged MCP servers.
+                Read /.well-known/agent-card.json, /server.json, llms.txt,
+                DID, JWKS, and Trust-Pledge metadata before calling anything.
             </p>
         </div>
         <div class="how-step">
@@ -1282,10 +1366,10 @@ footer {
         <div class="how-step">
             <span class="how-step-num">Step 03 ◆ Route</span>
             <h3 class="how-step-title">Transparent protocol bridge</h3>
-            <div class="how-step-code">POST /route/call</div>
+            <div class="how-step-code">POST /api/a2a ⇄ /api/mcp</div>
             <p class="how-step-desc">
-                Rust-backed router. Consent-chain JWT propagation.
-                Measures latency, quality, success rate per transaction.
+                A2A SendMessage can call MCP tools/call. MCP tools/call can call
+                A2A SendMessage. Public HTTPS targets only; local networks blocked.
             </p>
         </div>
         <div class="how-step">
@@ -1302,29 +1386,29 @@ footer {
 
 <section class="status-section" id="status">
     <span class="section-marker">05 // Status</span>
-    <h2 class="section-title">Pre-Alpha.<br><span class="italic">Open spec phase.</span></h2>
+    <h2 class="section-title">Pre-Alpha.<br><span class="italic">Bridge MVP live.</span></h2>
     <p class="section-sub" style="color: rgba(255, 248, 231, 0.85);">
-        We publish specifications before code. The Trust-Pledge is in public review.
-        Reference implementation begins Q3 2026.
+        The public A2A/MCP bridge MVP, Trust-Pledge, DID, JWKS, Agent Card,
+        MCP server metadata, robots, sitemap, and llms.txt are live.
     </p>
 
     <div class="timeline">
         <div class="phase active">
             <div class="phase-quarter">Q2 2026</div>
             <span class="phase-status">● ACTIVE NOW</span>
-            <h3 class="phase-title">RFC Discussion</h3>
+            <h3 class="phase-title">Bridge MVP + RFC Discussion</h3>
             <p class="phase-desc">
-                Trust-Pledge spec in public review. Architecture draft live.
-                Community input on schema and audit methodology welcomed.
+                A2A bridge agent and MCP bridge server live for public HTTPS targets.
+                Trust-Pledge spec remains in public review.
             </p>
         </div>
         <div class="phase">
             <div class="phase-quarter">Q3 2026</div>
             <span class="phase-status">Planned</span>
-            <h3 class="phase-title">Discovery MVP</h3>
+            <h3 class="phase-title">Registry MVP</h3>
             <p class="phase-desc">
-                Bridge layer prototype. First 100 registered agents.
-                SDK in Python + TypeScript. Vector search live.
+                Authenticated agent registration, allowlists, trust filters,
+                persistent routing sessions, and SDKs.
             </p>
         </div>
         <div class="phase">

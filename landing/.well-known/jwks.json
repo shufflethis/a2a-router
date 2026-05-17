@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "bMhF8fHBAqG4EF_ADiH8B6Y8tviGcZGXXi_W68Sp7Hs",
+      "kid": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17",
+      "alg": "EdDSA",
+      "use": "sig"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "a2a-router",
+  "url": "https://www.a2a-router.com",
+  "status": "pre_alpha_rfc",
+  "updatedAt": "2026-05-17",
+  "purpose": "Machine-readable discovery entrypoint for a2a-router, a post-discovery bridge and trust metadata layer for agent economies.",
+  "endpoints": {
+    "website": "https://www.a2a-router.com/",
+    "llms": "https://www.a2a-router.com/llms.txt",
+    "robots": "https://www.a2a-router.com/robots.txt",
+    "sitemap": "https://www.a2a-router.com/sitemap.xml",
+    "mcpServerJson": "https://www.a2a-router.com/server.json",
+    "mcpStreamableHttp": "https://www.a2a-router.com/api/mcp",
+    "did": "https://www.a2a-router.com/.well-known/did.json",
+    "jwks": "https://www.a2a-router.com/.well-known/jwks.json",
+    "trustPledge": "https://www.a2a-router.com/.well-known/trust-pledge.json",
+    "a2aAgentCard": "https://www.a2a-router.com/.well-known/agent-card.json",
+    "a2aJsonRpc": "https://www.a2a-router.com/api/a2a"
+  },
+  "protocols": {
+    "a2a": {
+      "discovery": "https://www.a2a-router.com/.well-known/agent-card.json",
+      "jsonRpcEndpoint": "https://www.a2a-router.com/api/a2a",
+      "runtimeStatus": "status_agent_and_bridge_router",
+      "bridgeCapabilities": [
+        "A2A SendMessage to MCP tools/call",
+        "A2A SendMessage to A2A SendMessage"
+      ]
+    },
+    "mcp": {
+      "discovery": "https://www.a2a-router.com/server.json",
+      "streamableHttpEndpoint": "https://www.a2a-router.com/api/mcp",
+      "runtimeStatus": "status_server_and_bridge_router",
+      "bridgeCapabilities": [
+        "MCP tools/call to A2A SendMessage",
+        "MCP tools/call to MCP tools/call"
+      ],
+      "note": "a2a-router exposes a public HTTPS-only bridge router. Local, private, reserved, multicast, and documentation IP targets are blocked. Registry and settlement are not live yet."
+    }
+  },
+  "trust": {
+    "did": "did:web:www.a2a-router.com",
+    "pledge": "https://www.a2a-router.com/.well-known/trust-pledge.json",
+    "auditTier": "self_attested",
+    "signatureAlgorithm": "EdDSA"
+  },
+  "repository": "https://github.com/shufflethis/a2a-router",
+  "limitations": [
+    "No authenticated agent registry yet",
+    "No persistent routing sessions yet",
+    "No streaming bridge transport yet",
+    "No transaction settlement yet",
+    "Only public https:// targets are accepted"
+  ]
+}

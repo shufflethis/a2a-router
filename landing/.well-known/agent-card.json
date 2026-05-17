@@ -1,98 +1,143 @@
 {
-    "$schema": "https://a2a-protocol.org/schemas/agent-card-v0.3.json",
-    "protocol_version": "0.3.0",
-    "name": "a2a-router",
-    "display_name": "a2a-router // Cross-Protocol Agent Marketplace",
-    "description": "Cross-protocol agent marketplace bridging A2A and MCP, with an open Trust-Pledge standard and voluntary-tip economy. Currently in RFC discussion phase.",
-    "url": "https://a2a-router.com",
-    "documentation_url": "https://github.com/shufflethis/a2a-router",
-    "version": "0.1.0-rfc",
-    "status": "pre-alpha-rfc-phase",
-    "provider": {
-          "name": "shufflethis",
-          "url": "https://github.com/shufflethis",
-          "contact": "hello@a2a-router.com"
+  "protocolVersion": "0.3.0",
+  "name": "a2a-router Bridge Agent",
+  "description": "Public A2A bridge agent for a2a-router. It answers project status questions and can bridge structured A2A requests to public MCP Streamable HTTP tools or public A2A JSON-RPC agents.",
+  "supportedInterfaces": [
+    {
+      "url": "https://www.a2a-router.com/api/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "0.3"
+    }
+  ],
+  "provider": {
+    "organization": "a2a-router",
+    "url": "https://www.a2a-router.com"
+  },
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/shufflethis/a2a-router",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false,
+    "extendedAgentCard": false
+  },
+  "securitySchemes": {},
+  "security": [],
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "project-status",
+      "name": "Project Status",
+      "description": "Returns the current live status of a2a-router, including what is deployed and what remains planned.",
+      "tags": [
+        "a2a-router",
+        "status",
+        "roadmap",
+        "pre-alpha"
+      ],
+      "examples": [
+        "What is live today?",
+        "Is the bridge runtime available yet?"
+      ],
+      "inputModes": [
+        "text/plain",
+        "application/json"
+      ],
+      "outputModes": [
+        "text/plain",
+        "application/json"
+      ]
     },
-    "capabilities": {
-          "streaming": false,
-          "push_notifications": false,
-          "state_transitions": false,
-          "extensions": ["x-trust-pledge", "x-voluntary-tip"]
+    {
+      "id": "trust-pledge-discovery",
+      "name": "Trust-Pledge Discovery",
+      "description": "Returns public Trust-Pledge metadata, pledge URL, DID URL, and current self-attestation status.",
+      "tags": [
+        "trust-pledge",
+        "did",
+        "ed25519",
+        "agent-trust"
+      ],
+      "examples": [
+        "Where is the Trust-Pledge?",
+        "What commitments does a2a-router publish?"
+      ],
+      "inputModes": [
+        "text/plain",
+        "application/json"
+      ],
+      "outputModes": [
+        "text/plain",
+        "application/json"
+      ]
     },
-    "skills": [
-          {
-                  "id": "discover_agents",
-                  "name": "Discover agents and MCP servers",
-                  "description": "Semantic search across A2A agents and MCP servers. Planned Q3 2026.",
-                  "status": "planned"
-          },
-          {
-                  "id": "bridge_mcp_to_a2a",
-                  "name": "Bridge MCP server to A2A",
-                  "description": "Translate an MCP server into an A2A-discoverable agent.",
-                  "status": "planned"
-          },
-          {
-                  "id": "bridge_a2a_to_mcp",
-                  "name": "Bridge A2A agent to MCP",
-                  "description": "Expose an A2A agent as an MCP-compatible tool.",
-                  "status": "planned"
-          },
-          {
-                  "id": "verify_pledge",
-                  "name": "Verify Trust-Pledge",
-                  "description": "Resolve DID, fetch signed pledge, validate signature, return trust score.",
-                  "status": "planned"
-          }
-    ],
-    "endpoints": {
-          "discovery": "https://a2a-router.com/.well-known/agent-card.json",
-          "documentation": "https://github.com/shufflethis/a2a-router",
-          "rfc_trust_pledge": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
-          "openapi_spec": "https://a2a-router.com/.well-known/openapi.json",
-          "discussions": "https://github.com/shufflethis/a2a-router/discussions",
-          "issues": "https://github.com/shufflethis/a2a-router/issues"
+    {
+      "id": "bridge-to-mcp-tool",
+      "name": "Bridge to MCP Tool",
+      "description": "Accepts a structured bridge request and invokes a named tool on a public MCP Streamable HTTP endpoint.",
+      "tags": [
+        "bridge",
+        "mcp",
+        "tools/call",
+        "streamable-http"
+      ],
+      "examples": [
+        "{\"targetProtocol\":\"mcp\",\"endpointUrl\":\"https://www.a2a-router.com/api/mcp\",\"toolName\":\"a2a_router.status\",\"arguments\":{}}"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
     },
-    "authentication": {
-          "schemes": ["none"],
-          "note": "Public read-only during RFC phase."
-    },
-    "pricing": {
-          "model": "voluntary_tip",
-          "current_status": "free_during_rfc_phase",
-          "future_model": {
-                  "platform_fee_percent": 8,
-                  "discounts": {
-                            "trust_pledge_self_attested": -2,
-                            "trust_pledge_community_verified": -3,
-                            "trust_pledge_third_party_audited": -5,
-                            "platinum_tier": -6
-                  }
-          }
-    },
-    "x-trust-pledge": {
-          "pledge_version": "trust_pledge_v1",
-          "status": "self_attested",
-          "commitments": {
-                  "no_harm": "strict",
-                  "transparency": "strict",
-                  "consent_chain": "strict",
-                  "pii_minimization": "strict",
-                  "fair_value_exchange": "strict"
-          },
-          "audit_url": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
-          "note": "We dogfood our own standard."
-    },
-    "for_agents": {
-          "this_is_an_rfc_phase_agent": true,
-          "no_runtime_yet": true,
-          "you_can_help_by": [
-                  "Reading RFC-001",
-                  "Opening a discussion at https://github.com/shufflethis/a2a-router/discussions",
-                  "Filing an issue with concrete spec feedback"
-          ],
-          "next_machine_readable_milestone": "q3-2026-bridge-prototype"
-    },
-    "tags": ["agent-marketplace", "cross-protocol", "a2a", "mcp", "trust-standard", "rfc"],
-    "last_updated": "2026-05-16T22:00:00Z"
+    {
+      "id": "bridge-to-a2a-agent",
+      "name": "Bridge to A2A Agent",
+      "description": "Accepts a structured bridge request and invokes SendMessage on a public A2A JSON-RPC endpoint or Agent Card URL.",
+      "tags": [
+        "bridge",
+        "a2a",
+        "json-rpc",
+        "SendMessage"
+      ],
+      "examples": [
+        "{\"targetProtocol\":\"a2a\",\"agentCardUrl\":\"https://www.a2a-router.com/.well-known/agent-card.json\",\"messageText\":\"What is live?\"}"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ],
+  "x-trust-pledge": {
+    "pledgeUrl": "https://www.a2a-router.com/.well-known/trust-pledge.json",
+    "did": "did:web:www.a2a-router.com",
+    "auditTier": "self_attested"
+  },
+  "x-runtime-status": {
+    "current": "pre_alpha_rfc",
+    "callableStatusAgent": true,
+    "bridgeRuntimeAvailable": true,
+    "a2aToMcpBridgeAvailable": true,
+    "mcpToA2aBridgeAvailable": true,
+    "mcpStatusServerAvailable": true,
+    "mcpBridgeRuntimeAvailable": true,
+    "transactionRouterAvailable": false
+  },
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpPU0UiLCJraWQiOiJkaWQ6d2ViOnd3dy5hMmEtcm91dGVyLmNvbSN0cnVzdC1wbGVkZ2Uta2V5LTIwMjYtMDUtMTciLCJqa3UiOiJodHRwczovL3d3dy5hMmEtcm91dGVyLmNvbS8ud2VsbC1rbm93bi9qd2tzLmpzb24ifQ",
+      "signature": "vQml5DEt0ubvJFhSVUQ6mKtZeiBj7-HSEOS0wQFtXrcYZCQ8vElYF_CpQxYsmBhJcXESEVELhUoZGztwNJ96CQ"
+    }
+  ]
 }

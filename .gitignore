@@ -42,3 +42,4 @@ INTERNAL-*.md
 /internal/
 /drafts/
 notes-internal/
+.vercel
