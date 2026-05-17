@@ -1,6 +1,6 @@
 # Contributing to a2a-router
 
-Thank you for your interest. This project is in **public RFC phase** — there's no code to commit yet, but plenty of thinking to contribute to.
+Thank you for your interest. This project is in **public RFC + bridge MVP phase**. The public A2A/MCP bridge endpoints are live, and the Trust-Pledge standard still needs serious review.
 
 ## What we need
 
@@ -33,13 +33,16 @@ Especially welcome:
 ### 🔗 Cross-registry conversations
 If you maintain a registry (Smithery, Glama, MCPize, etc.) or know someone who does:
 - We want Trust-Pledge to work across registries
-- Reach out via [hello@a2a-router.com](mailto:hello@a2a-router.com)
+- Open a [Discussion](https://github.com/shufflethis/a2a-router/discussions) or reach out by X DM. No public email is published.
+
+### 💸 Contributions
+If you want to support the project financially, use [Ko-fi](https://ko-fi.com/a2amcp). This is separate from protocol trust, audit status, and any future routing or listing decisions.
 
 ## What we don't need yet
 
-- ❌ Code PRs — there's no codebase yet
-- ❌ Feature requests for unbuilt features
-- ❌ Bug reports for non-existent products
+- ❌ PRs that require credential persistence, private-network routing, or settlement before those designs are reviewed
+- ❌ Claims that planned registry or settlement features are already live
+- ❌ Paid placement disguised as Trust-Pledge verification
 
 ## How to contribute
 
@@ -76,5 +79,7 @@ Contributors are listed in our `CONTRIBUTORS.md` (coming soon). For substantive 
 
 ## Contact
 
-- General: [hello@a2a-router.com](mailto:hello@a2a-router.com)
+- Contributions: [Ko-fi](https://ko-fi.com/a2amcp)
+- General: [GitHub Discussions](https://github.com/shufflethis/a2a-router/discussions)
+- Direct contact: X DM preferred; no public email is published.
 - Maintainer: [@shufflethis](https://github.com/shufflethis)

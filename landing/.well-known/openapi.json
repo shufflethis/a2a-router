@@ -1,76 +1,109 @@
 {
-    "openapi": "3.1.0",
-    "info": {
-          "title": "a2a-router API (specification stub)",
-          "description": "API specification for the a2a-router cross-protocol agent marketplace. This is a PLANNING DOCUMENT - no endpoints are live yet. MVP target: Q3 2026.",
-          "version": "0.1.0-stub",
-          "contact": {
-                  "name": "a2a-router",
-                  "url": "https://a2a-router.com",
-                  "email": "hello@a2a-router.com"
-          },
-          "license": {
-                  "name": "MIT",
-                  "url": "https://github.com/shufflethis/a2a-router/blob/main/LICENSE"
-          },
-          "x-status": "specification-stub",
-          "x-no-runtime-yet": true
+  "openapi": "3.1.0",
+  "info": {
+    "title": "a2a-router Bridge API",
+    "description": "Public HTTPS-only A2A/MCP bridge MVP for a2a-router. Authenticated registry, streaming transport, and settlement are planned but not live.",
+    "version": "0.1.0",
+    "contact": {
+      "name": "a2a-router",
+      "url": "https://github.com/shufflethis/a2a-router/discussions",
+      "x-direct-contact": "X DM preferred; no public email is published."
     },
-    "servers": [
-          {
-                  "url": "https://a2a-router.com",
-                  "description": "Production (not yet implemented)"
-          }
-    ],
-    "tags": [
-          { "name": "discovery", "description": "Agent and MCP server discovery" },
-          { "name": "bridge", "description": "Cross-protocol bridging" },
-          { "name": "trust", "description": "Trust-Pledge verification and audit" },
-          { "name": "transaction", "description": "Transaction routing and voluntary tips" }
-    ],
-    "paths": {
-          "/.well-known/agent-card.json": {
-                  "get": {
-                            "summary": "Get this gateway's A2A agent card",
-                            "tags": ["discovery"],
-                            "responses": { "200": { "description": "Agent card" } }
-                  }
-          },
-          "/api/v1/search": {
-                  "get": {
-                            "summary": "Discover agents and MCP servers",
-                            "tags": ["discovery"],
-                            "x-status": "planned",
-                            "responses": { "200": { "description": "List of matching agent cards" } }
-                  }
-          },
-          "/api/v1/agents/{did}/pledge": {
-                  "get": {
-                            "summary": "Get verified Trust-Pledge for agent",
-                            "tags": ["trust"],
-                            "x-status": "planned"
-                  }
-          },
-          "/bridge/mcp-to-a2a": {
-                  "post": {
-                            "summary": "Register an MCP server as A2A-reachable",
-                            "tags": ["bridge"],
-                            "x-status": "planned"
-                  }
-          },
-          "/route/call": {
-                  "post": {
-                            "summary": "Route a call to a target agent",
-                            "tags": ["transaction"],
-                            "x-status": "planned"
-                  }
-          },
-          "/tx/{transaction_id}/tip": {
-                  "post": {
-                            "summary": "Submit voluntary tip",
-                            "tags": ["transaction"],
-                            "x-status": "planned"
-                  }
-          }
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/shufflethis/a2a-router/blob/main/LICENSE"
+    },
+    "x-status": "bridge-mvp-live",
+    "x-contributions": {
+      "koFi": "https://ko-fi.com/a2amcp",
+      "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
     }
+  },
+  "servers": [
+    {
+      "url": "https://www.a2a-router.com",
+      "description": "Production bridge MVP"
+    }
+  ],
+  "tags": [
+    { "name": "discovery", "description": "Machine-readable agent, MCP, DID, and Trust-Pledge metadata" },
+    { "name": "bridge", "description": "Cross-protocol A2A and MCP bridge calls" },
+    { "name": "trust", "description": "Trust-Pledge verification and self-attestation metadata" }
+  ],
+  "paths": {
+    "/.well-known/agent-card.json": {
+      "get": {
+        "summary": "Get the public A2A Agent Card",
+        "tags": ["discovery"],
+        "responses": { "200": { "description": "A2A Agent Card" } }
+      }
+    },
+    "/.well-known/a2a-router.json": {
+      "get": {
+        "summary": "Get the a2a-router discovery index",
+        "tags": ["discovery"],
+        "responses": { "200": { "description": "Discovery index" } }
+      }
+    },
+    "/.well-known/trust-pledge.json": {
+      "get": {
+        "summary": "Get the signed Trust-Pledge",
+        "tags": ["trust"],
+        "responses": { "200": { "description": "Self-attested Trust-Pledge with detached JWS signature" } }
+      }
+    },
+    "/.well-known/did.json": {
+      "get": {
+        "summary": "Get the DID document",
+        "tags": ["trust"],
+        "responses": { "200": { "description": "did:web DID document" } }
+      }
+    },
+    "/.well-known/jwks.json": {
+      "get": {
+        "summary": "Get public signing keys",
+        "tags": ["trust"],
+        "responses": { "200": { "description": "JWKS for Trust-Pledge and Agent Card signatures" } }
+      }
+    },
+    "/server.json": {
+      "get": {
+        "summary": "Get MCP server metadata",
+        "tags": ["discovery"],
+        "responses": { "200": { "description": "MCP remote server metadata" } }
+      }
+    },
+    "/api/mcp": {
+      "post": {
+        "summary": "Call the MCP Streamable HTTP bridge endpoint",
+        "tags": ["bridge"],
+        "description": "Supports initialize, tools/list, and tools/call for a2a_router.status, a2a_router.trust_pledge, a2a_router.call_a2a_agent, a2a_router.list_mcp_tools, and a2a_router.call_mcp_tool.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "JSON-RPC response" } }
+      }
+    },
+    "/api/a2a": {
+      "post": {
+        "summary": "Call the A2A JSON-RPC bridge endpoint",
+        "tags": ["bridge"],
+        "description": "Supports project status responses and structured SendMessage bridge calls to public HTTPS MCP or A2A targets.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "JSON-RPC response" } }
+      }
+    }
+  }
 }

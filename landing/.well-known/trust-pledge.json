@@ -64,6 +64,8 @@
   "references": {
     "rfc": "https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md",
     "architecture": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
+    "discussions": "https://github.com/shufflethis/a2a-router/discussions",
+    "contributions": "https://ko-fi.com/a2amcp",
     "agentCard": "https://www.a2a-router.com/.well-known/agent-card.json"
   },
   "signature": {
@@ -71,6 +73,6 @@
     "algorithm": "EdDSA",
     "keyId": "did:web:www.a2a-router.com#trust-pledge-key-2026-05-17",
     "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6InRydXN0LXBsZWRnZStqd3MiLCJraWQiOiJkaWQ6d2ViOnd3dy5hMmEtcm91dGVyLmNvbSN0cnVzdC1wbGVkZ2Uta2V5LTIwMjYtMDUtMTciLCJqa3UiOiJodHRwczovL3d3dy5hMmEtcm91dGVyLmNvbS8ud2VsbC1rbm93bi9qd2tzLmpzb24ifQ",
-    "signature": "I1nT-nXghbdplX-45nedWbG1b-fwecVtj4rpON7NXSL_ZVEVme0zeOWfkySkguKsZlL6tLq12MAxPIA90LvBDg"
+    "signature": "V_sTrNIBLPIDbkla9KlR7I7wDTdRaXhAmBQm7FUebUG2_BXzjewvBWlngf2OSEt8J9NowvaRv9Gd9k9qA9zxDw"
   }
 }

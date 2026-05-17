@@ -1,42 +1,58 @@
 {
-    "$schema": "https://modelcontextprotocol.io/schema/v1/server-manifest.json",
-    "name": "a2a-router",
-    "display_name": "a2a-router MCP Bridge",
-    "description": "MCP server interface for a2a-router. Allows MCP-first clients to discover and interact with A2A agents through a unified protocol. Specification stub - implementation planned Q3 2026.",
-    "version": "0.1.0-stub",
-    "status": "specification-stub",
-    "homepage": "https://a2a-router.com",
-    "repository": "https://github.com/shufflethis/a2a-router",
-    "documentation": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
-    "provider": {
-          "name": "shufflethis",
-          "contact": "hello@a2a-router.com"
+  "$schema": "https://modelcontextprotocol.io/schema/v1/server-manifest.json",
+  "name": "a2a-router",
+  "display_name": "a2a-router MCP Bridge",
+  "description": "Public MCP Streamable HTTP bridge for a2a-router. It exposes project status, signed Trust-Pledge metadata, A2A invocation, MCP tool discovery, and MCP tool invocation for public HTTPS targets.",
+  "version": "0.1.0",
+  "status": "bridge-mvp-live",
+  "homepage": "https://www.a2a-router.com",
+  "repository": "https://github.com/shufflethis/a2a-router",
+  "documentation": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
+  "provider": {
+    "name": "shufflethis",
+    "contact": "X DM preferred; no public email is published.",
+    "discussions": "https://github.com/shufflethis/a2a-router/discussions"
+  },
+  "transport": ["streamable-http"],
+  "endpoint": "https://www.a2a-router.com/api/mcp",
+  "tools": [
+    {
+      "name": "a2a_router.status",
+      "description": "Return current live status, endpoints, guardrails, and planned features.",
+      "status": "live"
     },
-    "transport": ["stdio", "sse", "streamable-http"],
-    "tools": [
-          {
-                  "name": "discover_agents",
-                  "description": "Search for A2A agents and MCP servers by capability.",
-                  "status": "planned"
-          },
-          {
-                  "name": "verify_trust_pledge",
-                  "description": "Resolve agent DID, fetch signed Trust-Pledge, verify signature.",
-                  "status": "planned"
-          },
-          {
-                  "name": "bridge_agent",
-                  "description": "Cross-protocol bridge call.",
-                  "status": "planned"
-          }
-    ],
-    "x-installation": {
-          "current_status": "not_installable_yet",
-          "future_install_command": "npx -y @a2a-router/mcp-bridge",
-          "available_in": "Q3 2026"
+    {
+      "name": "a2a_router.trust_pledge",
+      "description": "Return public Trust-Pledge URL, DID URL, JWKS URL, and self-attestation metadata.",
+      "status": "live"
     },
-    "x-trust-pledge": {
-          "see": "https://a2a-router.com/.well-known/agent-card.json"
+    {
+      "name": "a2a_router.call_a2a_agent",
+      "description": "Invoke SendMessage on a public HTTPS A2A JSON-RPC endpoint or Agent Card URL.",
+      "status": "live"
     },
-    "tags": ["mcp", "a2a-bridge", "agent-discovery", "trust-verification", "rfc"]
+    {
+      "name": "a2a_router.list_mcp_tools",
+      "description": "List tools from a public HTTPS MCP Streamable HTTP endpoint.",
+      "status": "live"
+    },
+    {
+      "name": "a2a_router.call_mcp_tool",
+      "description": "Invoke a named tool on a public HTTPS MCP Streamable HTTP endpoint.",
+      "status": "live"
+    }
+  ],
+  "x-installation": {
+    "current_status": "remote_server_live",
+    "streamable_http_endpoint": "https://www.a2a-router.com/api/mcp"
+  },
+  "x-trust-pledge": {
+    "see": "https://www.a2a-router.com/.well-known/trust-pledge.json",
+    "auditTier": "self_attested"
+  },
+  "x-contributions": {
+    "koFi": "https://ko-fi.com/a2amcp",
+    "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
+  },
+  "tags": ["mcp", "a2a-bridge", "agent-discovery", "trust-verification", "rfc"]
 }

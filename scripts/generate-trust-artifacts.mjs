@@ -13,6 +13,9 @@ const privateKeyPath = join(secrets, 'a2a-router-trust-pledge-ed25519-private.pe
 const BASE_URL = 'https://www.a2a-router.com';
 const DID = 'did:web:www.a2a-router.com';
 const KEY_ID = `${DID}#trust-pledge-key-2026-05-17`;
+const REPOSITORY_URL = 'https://github.com/shufflethis/a2a-router';
+const DISCUSSIONS_URL = `${REPOSITORY_URL}/discussions`;
+const CONTRIBUTIONS_URL = 'https://ko-fi.com/a2amcp';
 
 function stable(value) {
   if (Array.isArray(value)) {
@@ -112,7 +115,7 @@ const agentCardWithoutSignature = {
     url: BASE_URL
   },
   version: '0.1.0',
-  documentationUrl: 'https://github.com/shufflethis/a2a-router',
+  documentationUrl: REPOSITORY_URL,
   capabilities: {
     streaming: false,
     pushNotifications: false,
@@ -174,6 +177,15 @@ const agentCardWithoutSignature = {
     did: DID,
     auditTier: 'self_attested'
   },
+  'x-contact': {
+    discussions: DISCUSSIONS_URL,
+    direct: 'X DM preferred',
+    publicEmail: null
+  },
+  'x-contributions': {
+    koFi: CONTRIBUTIONS_URL,
+    note: 'Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions.'
+  },
   'x-runtime-status': {
     current: 'pre_alpha_rfc',
     callableStatusAgent: true,
@@ -200,7 +212,7 @@ const trustPledgeWithoutSignature = {
     did: DID,
     name: 'a2a-router',
     url: BASE_URL,
-    repository: 'https://github.com/shufflethis/a2a-router'
+    repository: REPOSITORY_URL
   },
   scope: {
     coveredSystems: [
@@ -255,8 +267,10 @@ const trustPledgeWithoutSignature = {
     keyId: KEY_ID
   },
   references: {
-    rfc: 'https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md',
-    architecture: 'https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md',
+    rfc: `${REPOSITORY_URL}/blob/main/docs/rfc/RFC-001-trust-pledge.md`,
+    architecture: `${REPOSITORY_URL}/blob/main/docs/architecture.md`,
+    discussions: DISCUSSIONS_URL,
+    contributions: CONTRIBUTIONS_URL,
     agentCard: `${BASE_URL}/.well-known/agent-card.json`
   }
 };
@@ -345,7 +359,16 @@ const discovery = {
     auditTier: 'self_attested',
     signatureAlgorithm: 'EdDSA'
   },
-  repository: 'https://github.com/shufflethis/a2a-router',
+  contact: {
+    discussions: DISCUSSIONS_URL,
+    direct: 'X DM preferred',
+    publicEmail: null
+  },
+  contributions: {
+    koFi: CONTRIBUTIONS_URL,
+    note: 'Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions.'
+  },
+  repository: REPOSITORY_URL,
   limitations: [
     'No authenticated agent registry yet',
     'No persistent routing sessions yet',

@@ -124,6 +124,15 @@
     "did": "did:web:www.a2a-router.com",
     "auditTier": "self_attested"
   },
+  "x-contact": {
+    "discussions": "https://github.com/shufflethis/a2a-router/discussions",
+    "direct": "X DM preferred",
+    "publicEmail": null
+  },
+  "x-contributions": {
+    "koFi": "https://ko-fi.com/a2amcp",
+    "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
+  },
   "x-runtime-status": {
     "current": "pre_alpha_rfc",
     "callableStatusAgent": true,
@@ -137,7 +146,7 @@
   "signatures": [
     {
       "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpPU0UiLCJraWQiOiJkaWQ6d2ViOnd3dy5hMmEtcm91dGVyLmNvbSN0cnVzdC1wbGVkZ2Uta2V5LTIwMjYtMDUtMTciLCJqa3UiOiJodHRwczovL3d3dy5hMmEtcm91dGVyLmNvbS8ud2VsbC1rbm93bi9qd2tzLmpzb24ifQ",
-      "signature": "vQml5DEt0ubvJFhSVUQ6mKtZeiBj7-HSEOS0wQFtXrcYZCQ8vElYF_CpQxYsmBhJcXESEVELhUoZGztwNJ96CQ"
+      "signature": "npu_QBlsXdjg0lIVUzfeKoAOx9aBbYBPk9bFvWuaD1ycfus8stlqpvYhsLK7XnwAcjW3gcbDFdRhWE7r2quGAw"
     }
   ]
 }

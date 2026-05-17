@@ -44,6 +44,15 @@
     "auditTier": "self_attested",
     "signatureAlgorithm": "EdDSA"
   },
+  "contact": {
+    "discussions": "https://github.com/shufflethis/a2a-router/discussions",
+    "direct": "X DM preferred",
+    "publicEmail": null
+  },
+  "contributions": {
+    "koFi": "https://ko-fi.com/a2amcp",
+    "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
+  },
   "repository": "https://github.com/shufflethis/a2a-router",
   "limitations": [
     "No authenticated agent registry yet",

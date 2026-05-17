@@ -37,5 +37,6 @@ a2a-router now provides a callable A2A bridge agent and MCP bridge server for pu
 
 ## Contact
 
-- Email: hello@a2a-router.com
+- Contributions: https://ko-fi.com/a2amcp
 - Discussions: https://github.com/shufflethis/a2a-router/discussions
+- Direct contact: X DM preferred; no public email is published.
