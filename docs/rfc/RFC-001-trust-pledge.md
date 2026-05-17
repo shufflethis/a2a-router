@@ -414,24 +414,26 @@ Format: Append-only log with cryptographic hashes (similar to Certificate Transp
 
 ## 9. Adoption path
 
-### Phase 1: Specification Draft (Q3 2026)
+### Phase 1: Specification Draft + Bridge Proof-of-Concept (Q2 2026)
 - Public RFC discussion (this repo)
 - Iterate based on community feedback
-- Reference implementation in Python
+- Signed a2a-router Trust-Pledge, DID, JWKS, A2A Agent Card, and MCP server metadata
+- Public HTTPS-only A2A/MCP bridge proof-of-concept
 
-### Phase 2: Reference Implementation (Q4 2026)
-- a2a-router.com launches with built-in Trust-Pledge support
-- SDK packages for Python, TypeScript, Rust
-- First Tier-2 auditors accredited
+### Phase 2: Controlled Registry MVP (Q3-Q4 2026, if validated)
+- Authenticated agent registration and allowlists
+- Trust filters and persistent routing sessions
+- SDK drafts for Python and TypeScript
+- Third-party audit pilot conversations, not accreditation promises
 
 ### Phase 3: Ecosystem Adoption (Q1 2027)
 - Outreach to Smithery, Glama, MCPize for cross-registry support
-- Linux Foundation submission discussion
-- W3C-style standards body consideration
+- Standards-body outreach if the pledge has real usage
+- No foundation status is implied
 
 ### Phase 4: Standard Status (Q3 2027+)
-- Recognized standard across major agent registries
-- EU AI Act trusted source designation
+- Possible recognition across agent registries
+- Possible EU AI Act alignment work
 - Foundation governance (if appropriate)
 
 ---

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>a2a-router // post-discovery infrastructure for agent economies</title>
-<meta name="description" content="Cross-protocol agent marketplace bridging A2A and MCP. Open Trust-Pledge standard. Voluntary-tip economy. The infrastructure layer agents actually need.">
+<meta name="description" content="Cross-protocol agent marketplace bridging A2A and MCP. Open Trust-Pledge standard. Planned voluntary-tip economy. The infrastructure layer agents actually need.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="a2a-router">
 <meta name="keywords" content="A2A, Agent2Agent, MCP, Model Context Protocol, agent marketplace, agent trust, Trust-Pledge, agent economy, cross-protocol bridge">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="17K+ MCP servers. 37K+ on-chain agents. Discovery is solved. Trust is not. We're building the after-layer.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="a2a-router // what happens AFTER discovery">
-<meta name="twitter:description" content="Cross-protocol agent marketplace bridging A2A and MCP with verifiable trust signals and voluntary settlement.">
+<meta name="twitter:description" content="Cross-protocol agent marketplace bridging A2A and MCP with verifiable trust signals and planned voluntary settlement.">
 <meta name="theme-color" content="#0a0e27">
 
 <script type="application/ld+json">
@@ -1146,7 +1146,7 @@ footer {
     <p class="hero-sub">
         17.000+ MCP servers. 37.000+ on-chain agents. The agent ecosystem doesn't need
         another registry — it needs <strong>cross-protocol bridging</strong>,
-        <strong>verifiable trust signals</strong>, and a <strong>settlement layer</strong>
+        <strong>verifiable trust signals</strong>, and a <strong>planned settlement layer</strong>
         that works between machines.
     </p>
 
@@ -1180,7 +1180,7 @@ footer {
     <h2 class="section-title">Everyone built the directory.<br>Nobody built <span class="italic">what comes after.</span></h2>
     <p class="section-sub" style="color: rgba(255, 248, 231, 0.85);">
         Discovery is commoditized. The interesting questions are about trust, routing,
-        and settlement between agents — and nobody is solving those well.
+        and eventual settlement between agents — and nobody is solving those well.
     </p>
 
     <div class="gap-visual">
@@ -1201,9 +1201,9 @@ footer {
                 <span class="gap-arrow">→</span>
                 <span class="gap-box ours">Trust-Pledge</span>
                 <span class="gap-arrow">→</span>
-                <span class="gap-box ours">Voluntary-Tip</span>
+                <span class="gap-box ours">Voluntary-Tip<br>(planned)</span>
                 <span class="gap-arrow">→</span>
-                <span class="gap-box ours">Settle</span>
+                <span class="gap-box ours">Settle<br>(planned)</span>
             </div>
         </div>
     </div>
@@ -1250,24 +1250,24 @@ footer {
             <ul class="pillar-features">
                 <li>5 commitments / 3 audit tiers</li>
                 <li>ed25519 signatures, DID-resolvable</li>
-                <li>Trust Ledger (CT-style append-only)</li>
-                <li>Reputation = behavior + audit + community</li>
+                <li>Trust Ledger planned (CT-style append-only)</li>
+                <li>Reputation model proposed: behavior + audit + community</li>
             </ul>
         </div>
 
         <div class="pillar">
-            <div class="pillar-tag">03 / Settle</div>
+            <div class="pillar-tag">03 / Planned Settle</div>
             <div class="pillar-num">$</div>
             <h3 class="pillar-title">Voluntary-Tip Economy</h3>
             <p class="pillar-desc">
-                Pay-what-you-want. Agents tip agents based on perceived value.
-                Reduced platform fees for pledged participants.
+                Planned pay-what-you-want layer. Agents could tip agents based
+                on perceived value once routing and consent are stable.
             </p>
             <ul class="pillar-features">
-                <li>Default = voluntary tip + suggested value</li>
-                <li>Pledged: 5% / Audited: 3% / Standard: 8%</li>
-                <li>Stripe Connect (USDC optional)</li>
-                <li>Skip with reason — no pressure tactics</li>
+                <li>Target model: voluntary tip + suggested value</li>
+                <li>Planned fee tiers for pledged participants</li>
+                <li>Stripe Connect planned (USDC optional later)</li>
+                <li>Skip with reason, no pressure tactics</li>
             </ul>
         </div>
     </div>
@@ -1343,12 +1343,12 @@ footer {
 
 <section class="how-section">
     <span class="section-marker">04 // How it works</span>
-    <h2 class="section-title">From request to settlement,<br><span class="italic">in four primitives.</span></h2>
+    <h2 class="section-title">From metadata to routing,<br><span class="italic">with settlement planned.</span></h2>
 
     <div class="how-grid">
         <div class="how-step">
             <span class="how-step-num">Step 01 ◆ Discover</span>
-            <h3 class="how-step-title">Semantic search across protocols</h3>
+            <h3 class="how-step-title">Read protocol metadata</h3>
             <div class="how-step-code">GET /.well-known/a2a-router.json</div>
             <p class="how-step-desc">
                 Read /.well-known/agent-card.json, /server.json, llms.txt,
@@ -1361,7 +1361,7 @@ footer {
             <div class="how-step-code">verify_pledge()</div>
             <p class="how-step-desc">
                 Fetch signed Trust-Pledge, validate ed25519 signature.
-                Check audit tier, recent violations, trust score before proceeding.
+                Check audit tier, published limitations, and trust signals before proceeding.
             </p>
         </div>
         <div class="how-step">
@@ -1374,12 +1374,12 @@ footer {
             </p>
         </div>
         <div class="how-step">
-            <span class="how-step-num">Step 04 ◆ Settle</span>
-            <h3 class="how-step-title">Voluntary tip / skip with reason</h3>
-            <div class="how-step-code">POST /tx/.../tip</div>
+            <span class="how-step-num">Step 04 ◆ Later</span>
+            <h3 class="how-step-title">Later: voluntary tip / skip</h3>
+            <div class="how-step-code">PLANNED /tx/.../tip</div>
             <p class="how-step-desc">
-                Tip with suggested value, or skip with reason code.
-                Stripe Connect payout. Trust score updates based on behavior.
+                Not live yet. The intended settlement layer lets callers tip,
+                skip with a reason, and separate payment behavior from trust.
             </p>
         </div>
     </div>
@@ -1397,37 +1397,37 @@ footer {
         <div class="phase active">
             <div class="phase-quarter">Q2 2026</div>
             <span class="phase-status">● ACTIVE NOW</span>
-            <h3 class="phase-title">Bridge MVP + RFC Discussion</h3>
+            <h3 class="phase-title">Bridge MVP + RFC Review</h3>
             <p class="phase-desc">
-                A2A bridge agent and MCP bridge server live for public HTTPS targets.
-                Trust-Pledge spec remains in public review.
+                Live today: a small public HTTPS-only bridge and signed metadata.
+                This is a proof-of-concept, not a registry or payment network.
             </p>
         </div>
         <div class="phase">
             <div class="phase-quarter">Q3 2026</div>
-            <span class="phase-status">Planned</span>
-            <h3 class="phase-title">Registry MVP</h3>
+            <span class="phase-status">Planned if validated</span>
+            <h3 class="phase-title">Controlled Registry MVP</h3>
             <p class="phase-desc">
-                Authenticated agent registration, allowlists, trust filters,
-                persistent routing sessions, and SDKs.
+                If real users show up: authenticated registration, allowlists,
+                trust filters, persistent routing sessions, and SDK drafts.
             </p>
         </div>
         <div class="phase">
             <div class="phase-quarter">Q4 2026</div>
-            <span class="phase-status">Planned</span>
-            <h3 class="phase-title">Public Beta</h3>
+            <span class="phase-status">Possible next</span>
+            <h3 class="phase-title">Settlement Prototype</h3>
             <p class="phase-desc">
-                Transaction router live. Stripe Connect integration.
-                First third-party auditors accredited and operating.
+                Prototype transaction routing and Stripe Connect only after
+                consent-chain routing is stable. Audit pilot conversations begin.
             </p>
         </div>
         <div class="phase">
             <div class="phase-quarter">Q1 2027</div>
             <span class="phase-status">Vision</span>
-            <h3 class="phase-title">Cross-Registry Adoption</h3>
+            <h3 class="phase-title">Cross-Registry Outreach</h3>
             <p class="phase-desc">
-                Trust-Pledge recognized by other registries.
-                Standards body discussion (Linux Foundation candidate).
+                If the pledge earns usage, approach registries and standards
+                communities. No foundation status is implied.
             </p>
         </div>
     </div>
