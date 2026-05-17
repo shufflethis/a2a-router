@@ -1,9 +1,9 @@
 # a2a-router — Technical Architecture
 
-**Status:** Draft v0.1
-**Last updated:** May 16, 2026
+**Status:** Bridge MVP live + draft architecture v0.1
+**Last updated:** May 17, 2026
 
-This document describes the planned architecture of a2a-router.com. **No code exists yet.** This is a design document for community discussion.
+This document describes the current bridge MVP and planned architecture of a2a-router.com. The public HTTPS-only A2A/MCP bridge is live; registry, persistent sessions, streaming transport, and settlement are still planned.
 
 ## System overview
 
@@ -44,19 +44,37 @@ This document describes the planned architecture of a2a-router.com. **No code ex
 ### 1. Discovery Engine
 **Purpose:** Crawl, index, and search agents across A2A and MCP ecosystems.
 
-- Crawls `/.well-known/agent-card.json` (A2A) and MCP manifests
+Current MVP:
+- Publishes machine-readable discovery through `/.well-known/a2a-router.json`
+- Publishes A2A discovery through `/.well-known/agent-card.json`
+- Publishes MCP remote metadata through `/server.json`
+- Publishes AI crawler context through `/llms.txt`
+
+Planned:
+- Crawl `/.well-known/agent-card.json` (A2A) and MCP `server.json` metadata
 - Vector DB (Qdrant) for semantic capability search
 - PostgreSQL for structured filtering (skills, auth, pricing, latency)
 
 ### 2. Bridge Layer (KEY DIFFERENTIATOR)
 **Purpose:** Translate between A2A and MCP protocols transparently.
 
-- **MCP → A2A:** Auto-generate Agent Cards from MCP server manifests
-- **A2A → MCP:** Expose A2A agents as MCP tools via `@a2a-router/mcp-bridge` npm package
-- Stateless translation layer, version-aware
+Current MVP:
+- **MCP → A2A:** MCP tool `a2a_router.call_a2a_agent` invokes public A2A JSON-RPC `SendMessage`
+- **MCP → MCP:** MCP tool `a2a_router.call_mcp_tool` invokes public MCP `tools/call`
+- **A2A → MCP:** A2A `SendMessage` with structured bridge data invokes public MCP `tools/call`
+- **A2A → A2A:** A2A `SendMessage` with structured bridge data invokes public A2A `SendMessage`
+- Public HTTPS targets only; localhost, private, reserved, multicast, and documentation IP ranges are blocked
+
+Planned:
+- authenticated agent registry
+- persistent routing sessions
+- streaming bridge transport
+- consent-chain JWT enforcement
 
 ### 3. Transaction Router
 **Purpose:** Route agent calls, measure quality, handle voluntary tips.
+
+Current status: planned, not live.
 
 - Rust implementation (latency-critical)
 - JWT-based agent authentication
@@ -67,16 +85,23 @@ This document describes the planned architecture of a2a-router.com. **No code ex
 ### 4. Identity + Trust Layer
 **Purpose:** DID-based agent identity, Trust-Pledge verification, reputation.
 
-- `did:web` resolver
-- ed25519 signature verification
+Current MVP:
+- Publishes DID document at `/.well-known/did.json`
+- Publishes JWKS at `/.well-known/jwks.json`
+- Publishes signed Trust-Pledge at `/.well-known/trust-pledge.json`
+- Signs Agent Card and Trust-Pledge with Ed25519/EdDSA
+
+Planned:
 - Trust score computation (see RFC-001)
 - Rate limiting per agent
+- community verification and third-party audit workflow
 
 ## Tech stack
 
 | Component | Tech | Reasoning |
 |-----------|------|-----------|
-| Discovery + Bridge | Python (FastAPI) | Agent/LLM ecosystem is Python-first |
+| Bridge MVP | Vercel Functions (Node.js) | Small public HTTPS bridge, fast iteration |
+| Discovery + Bridge Registry | Python (FastAPI) | Agent/LLM ecosystem is Python-first |
 | Transaction Router | Rust | Latency-critical, no GIL |
 | Frontend | Next.js 15 | Modern, fast, Vercel-deployable |
 | Vector DB | Qdrant | Open-source, performant |
