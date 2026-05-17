@@ -16,6 +16,7 @@ const KEY_ID = `${DID}#trust-pledge-key-2026-05-17`;
 const REPOSITORY_URL = 'https://github.com/shufflethis/a2a-router';
 const DISCUSSIONS_URL = `${REPOSITORY_URL}/discussions`;
 const CONTRIBUTIONS_URL = 'https://ko-fi.com/a2amcp';
+const X_CONTACT_URL = 'https://x.com/wuebbe';
 
 function stable(value) {
   if (Array.isArray(value)) {
@@ -179,7 +180,8 @@ const agentCardWithoutSignature = {
   },
   'x-contact': {
     discussions: DISCUSSIONS_URL,
-    direct: 'X DM preferred',
+    x: X_CONTACT_URL,
+    direct: 'X DM @wuebbe preferred',
     publicEmail: null
   },
   'x-contributions': {
@@ -271,6 +273,7 @@ const trustPledgeWithoutSignature = {
     architecture: `${REPOSITORY_URL}/blob/main/docs/architecture.md`,
     discussions: DISCUSSIONS_URL,
     contributions: CONTRIBUTIONS_URL,
+    contact: X_CONTACT_URL,
     agentCard: `${BASE_URL}/.well-known/agent-card.json`
   }
 };
@@ -361,7 +364,8 @@ const discovery = {
   },
   contact: {
     discussions: DISCUSSIONS_URL,
-    direct: 'X DM preferred',
+    x: X_CONTACT_URL,
+    direct: 'X DM @wuebbe preferred',
     publicEmail: null
   },
   contributions: {

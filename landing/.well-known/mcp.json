@@ -10,7 +10,8 @@
   "documentation": "https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md",
   "provider": {
     "name": "shufflethis",
-    "contact": "X DM preferred; no public email is published.",
+    "contact": "https://x.com/wuebbe",
+    "contact_note": "X DM @wuebbe preferred; no public email is published.",
     "discussions": "https://github.com/shufflethis/a2a-router/discussions"
   },
   "transport": ["streamable-http"],

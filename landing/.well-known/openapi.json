@@ -6,8 +6,9 @@
     "version": "0.1.0",
     "contact": {
       "name": "a2a-router",
-      "url": "https://github.com/shufflethis/a2a-router/discussions",
-      "x-direct-contact": "X DM preferred; no public email is published."
+      "url": "https://x.com/wuebbe",
+      "x-discussions": "https://github.com/shufflethis/a2a-router/discussions",
+      "x-direct-contact": "X DM @wuebbe preferred; no public email is published."
     },
     "license": {
       "name": "MIT",

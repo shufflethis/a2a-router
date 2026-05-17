@@ -225,7 +225,7 @@ We are looking for:
 
 Open an [issue](https://github.com/shufflethis/a2a-router/issues) or start a [discussion](https://github.com/shufflethis/a2a-router/discussions).
 
-Contributions and project support: [Ko-fi](https://ko-fi.com/a2amcp). Direct contact is via X DM; no public email is published.
+Contributions and project support: [Ko-fi](https://ko-fi.com/a2amcp). Direct contact is via [X DM @wuebbe](https://x.com/wuebbe); no public email is published.
 
 ## Inspiration and related work
 

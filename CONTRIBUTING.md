@@ -33,7 +33,7 @@ Especially welcome:
 ### 🔗 Cross-registry conversations
 If you maintain a registry (Smithery, Glama, MCPize, etc.) or know someone who does:
 - We want Trust-Pledge to work across registries
-- Open a [Discussion](https://github.com/shufflethis/a2a-router/discussions) or reach out by X DM. No public email is published.
+- Open a [Discussion](https://github.com/shufflethis/a2a-router/discussions) or reach out by [X DM](https://x.com/wuebbe). No public email is published.
 
 ### 💸 Contributions
 If you want to support the project financially, use [Ko-fi](https://ko-fi.com/a2amcp). This is separate from protocol trust, audit status, and any future routing or listing decisions.
@@ -81,5 +81,5 @@ Contributors are listed in our `CONTRIBUTORS.md` (coming soon). For substantive 
 
 - Contributions: [Ko-fi](https://ko-fi.com/a2amcp)
 - General: [GitHub Discussions](https://github.com/shufflethis/a2a-router/discussions)
-- Direct contact: X DM preferred; no public email is published.
+- Direct contact: [X DM @wuebbe](https://x.com/wuebbe); no public email is published.
 - Maintainer: [@shufflethis](https://github.com/shufflethis)
