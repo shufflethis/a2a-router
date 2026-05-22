@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Brand Color Gradients -->
+    <linearGradient id="grad-magenta" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff006e" />
+      <stop offset="100%" stop-color="#bd00ff" />
+    </linearGradient>
+    <linearGradient id="grad-acid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5ff3d" />
+      <stop offset="100%" stop-color="#ffb800" />
+    </linearGradient>
+    <linearGradient id="grad-cobalt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#4361ff" />
+    </linearGradient>
+    
+    <!-- Neon Glow Filter -->
+    <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="3" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#neon-glow)">
+    <!-- Outer Router Circular Tracks -->
+    <circle cx="256" cy="256" r="220" fill="none" stroke="url(#grad-cobalt)" stroke-width="4" stroke-dasharray="16 12" opacity="0.4" />
+    <circle cx="256" cy="256" r="180" fill="none" stroke="#fff8e7" stroke-width="2" stroke-dasharray="8 6" opacity="0.25" />
+    
+    <!-- Routing Tracks / Connections (Agent to Agent) -->
+    <!-- Path 1 (Top Left to Bottom Right) -->
+    <path d="M 100,100 L 256,256 L 412,412" fill="none" stroke="url(#grad-cobalt)" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+    <!-- Path 2 (Bottom Left to Top Right) -->
+    <path d="M 100,412 L 256,256 L 412,100" fill="none" stroke="url(#grad-magenta)" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+    
+    <!-- Circular orbital routing arcs -->
+    <path d="M 140,256 A 116,116 0 0,1 372,256" fill="none" stroke="url(#grad-acid)" stroke-width="4" stroke-dasharray="40 10" stroke-linecap="round" />
+    <path d="M 372,256 A 116,116 0 0,1 140,256" fill="none" stroke="url(#grad-cobalt)" stroke-width="4" stroke-dasharray="30 15" stroke-linecap="round" />
+
+    <!-- Routing Nodes / Packets on track -->
+    <circle cx="100" cy="100" r="10" fill="#fff8e7" stroke="url(#grad-cobalt)" stroke-width="4" />
+    <circle cx="412" cy="412" r="10" fill="#fff8e7" stroke="url(#grad-cobalt)" stroke-width="4" />
+    <circle cx="100" cy="412" r="10" fill="#fff8e7" stroke="url(#grad-magenta)" stroke-width="4" />
+    <circle cx="412" cy="100" r="10" fill="#fff8e7" stroke="url(#grad-magenta)" stroke-width="4" />
+
+    <!-- Intermediate Flowing Nodes -->
+    <circle cx="178" cy="178" r="6" fill="#f5ff3d" />
+    <circle cx="334" cy="334" r="6" fill="#f5ff3d" />
+    <circle cx="178" cy="334" r="6" fill="#00f0ff" />
+    <circle cx="334" cy="178" r="6" fill="#00f0ff" />
+
+    <!-- Central Diamond (Brand Identity: a2a-router Logo Mark) -->
+    <!-- Outer Rotated Square (Cream) -->
+    <rect x="176" y="176" width="160" height="160" transform="rotate(45 256 256)" fill="#ff006e" stroke="#fff8e7" stroke-width="8" stroke-linejoin="round" />
+    
+    <!-- Inner Rotated Square (Acid Yellow Core) -->
+    <rect x="206" y="206" width="100" height="100" transform="rotate(45 256 256)" fill="url(#grad-acid)" stroke="#050813" stroke-width="4" stroke-linejoin="round" />
+    
+    <!-- Core Center Signal Dot -->
+    <circle cx="256" cy="256" r="12" fill="#050813" />
+    <circle cx="256" cy="256" r="6" fill="#fff8e7" />
+  </g>
+</svg>
