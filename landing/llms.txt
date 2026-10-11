@@ -2,6 +2,9 @@
 
 > One product for agent-assisted manufacturing: an order passport with specifications, acceptance criteria and a portable local event history. Post-labor is the long-term vision.
 
+## Languages and market
+US English is the default at https://www.a2a-router.com/. Simplified Chinese: https://www.a2a-router.com/zh/. German: https://www.a2a-router.com/de/. All three share the same browser-local order storage and machine interfaces.
+
 ## Live today
 - Free manufacturing brief preparation for CNC machining, sheet metal and 3D printing.
 - Browser-local, self-reported order events with SHA-256 hash consistency checks, JSON export and import.

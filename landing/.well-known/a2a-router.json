@@ -64,7 +64,7 @@
     "Bridge calls accept public HTTPS targets only; private and reserved networks are blocked.",
     "The bridge does not persist credentials or sessions; streaming and push notifications are not implemented."
   ],
-  "product": "a2a-router Auftrags-Pass",
+  "product": "a2a-router Order Passport",
   "planned": {
     "factoryAttestations": "Paid evidence review of identity, capabilities and certificate scope; not yet available.",
     "orderLedger": "Persistent evidence-backed order events, delivery, acceptance, disputes and payment; not yet available.",
@@ -85,5 +85,11 @@
   "optionalHandoffs": {
     "manufacturingRequest": "https://vibe-manufacturing.com/request-quote",
     "note": "Optional external service; no automatic transfer."
-  }
+  },
+  "locales": {
+    "en-US": "https://www.a2a-router.com/",
+    "zh-Hans": "https://www.a2a-router.com/zh/",
+    "de": "https://www.a2a-router.com/de/"
+  },
+  "primaryMarket": "United States"
 }

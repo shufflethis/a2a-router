@@ -19,7 +19,7 @@ test('Briefs stay drafts, preserve acceptance criteria and report missing specif
   assert.equal(result.status, 'draft_only'); assert.equal(result.submitted, false); assert.equal(result.persisted, false);
   assert.equal(result.brief.acceptance, input.acceptance); assert.equal(result.brief.country, 'DE');
   assert.ok(result.unresolved.some(text => text.includes('tolerance')));
-  assert.equal(M.status.product, 'a2a-router Auftrags-Pass');
+  assert.equal(M.status.product, 'a2a-router Order Passport');
 });
 test('Incomplete, oversized and malformed specifications are rejected', () => {
   for (const patch of [{ quantity: 0 }, { quantity: 1.5 }, { quantity: '1e3' }, { quantity: true }, { country: 'Germany' }, { acceptance: ' ' }, { material: 'x'.repeat(121) }, { description: 'x'.repeat(2001) }, { process: '__proto__' }, { drawingUrl: 'javascript:alert(1)' }, { drawingUrl: 'https://secret@site.com/drawing' }, { extra: 'unknown' }]) assert.throws(() => M.prepareBrief({ ...input, ...patch }));
@@ -45,6 +45,26 @@ test('REST supports JSON and HTML without reflecting executable markup', async (
   assert.equal((await call('brief', { method: 'OPTIONS', headers: {} })).code, 204);
   assert.equal((await call('requirements', { method: 'GET', query: { process: 'sheet_metal' } })).code, 200);
   assert.equal((await call('requirements', { method: 'GET', query: { process: 'unknown' } })).code, 400);
+});
+test('No-JavaScript brief reviews and validation errors keep the selected locale', async () => {
+  for (const [lang, htmlLang, path, title, required] of [
+    ['en', 'en-US', '/', 'Your manufacturing brief', 'Required field'],
+    ['de', 'de', '/de/', 'Dein Fertigungsbrief', 'Pflichtfeld'],
+    ['zh', 'zh-CN', '/zh/', '你的制造要求', '必填项']
+  ]) {
+    const request = { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, query: { lang }, body: new URLSearchParams(input).toString() };
+    const result = await call('brief', request);
+    assert.equal(result.code, 200);
+    assert.ok(result.raw.includes(`lang="${htmlLang}"`));
+    assert.ok(result.raw.includes(title));
+    assert.ok(result.raw.includes(`href="${path}#brief"`));
+    const missing = { ...input }; delete missing.material;
+    const invalid = await call('brief', { ...request, body: new URLSearchParams(missing).toString() });
+    assert.equal(invalid.code, 400); assert.ok(invalid.raw.includes(required));
+  }
+  const unsafe = await call('brief', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, query: { lang: '<script>alert(1)</script>' }, body: new URLSearchParams(input).toString() });
+  assert.ok(unsafe.raw.includes('lang="en-US"'));
+  assert.ok(!unsafe.raw.includes('<script>alert'));
 });
 test('MCP advertises and executes brief tools and reports current product status', async () => {
   const rpc = body => call('mcp', { method: 'POST', headers: {}, body: { jsonrpc: '2.0', id: 1, ...body } });

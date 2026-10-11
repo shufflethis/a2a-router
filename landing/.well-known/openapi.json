@@ -327,7 +327,7 @@
           "country": {
             "type": "string",
             "pattern": "^[A-Za-z]{2}$",
-            "description": "Two-letter destination country code, e.g. DE."
+            "description": "Two-letter destination country code, e.g. US."
           },
           "acceptance": {
             "type": "string",

@@ -55,3 +55,16 @@ Its remote implementation may change. Data use is described in the page FAQ.
 
 Vercel project `a2a-router` uses repository root directory `landing`. Deploy the
 repository-shaped source with `landing/vercel.json`; do not change its root.
+
+## Locale pages
+
+US English is served at `/`; Simplified Chinese at `/zh/`; German at `/de/`.
+All pages share the same browser-local passports. `lib/i18n.js` localizes the UI;
+machine field names and passport hashes remain unchanged. The no-JavaScript form
+keeps its locale through `/api/brief?lang=en|zh|de`.
+
+Run `python3 scripts/localize.py` after changing `de/index.html` or the translation
+catalogue in that script. English and Chinese content is generated as static HTML,
+including canonical URLs, reciprocal hreflang links and localized structured data.
+The website uses locally hosted Fraunces and Space Mono fonts with included OFL
+licenses. Tracking loads asynchronously and does not block the product scripts.

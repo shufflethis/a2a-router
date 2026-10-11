@@ -14,7 +14,7 @@
       description: { type: 'string', minLength: 10, maxLength: 2000, description: 'What the part does, dimensions and constraints. Never invent specifications.' },
       material: { type: 'string', minLength: 1, maxLength: 120 },
       quantity: { type: 'integer', minimum: 1, maximum: 100000 },
-      country: { type: 'string', pattern: '^[A-Za-z]{2}$', description: 'Two-letter destination country code, e.g. DE.' },
+      country: { type: 'string', pattern: '^[A-Za-z]{2}$', description: 'Two-letter destination country code, e.g. US.' },
       acceptance: { type: 'string', minLength: 10, maxLength: 1000, description: 'How the buyer will check and accept the delivered parts.' },
       tolerance: { type: 'string', maxLength: 200 },
       finish: { type: 'string', maxLength: 200 },
@@ -24,7 +24,7 @@
     required: ['process', 'description', 'material', 'quantity', 'country', 'acceptance']
   };
   const status = {
-    project: 'a2a-router', product: 'a2a-router Auftrags-Pass', status: 'order_passport_mvp', updatedAt: '2026-10-11',
+    project: 'a2a-router', product: 'a2a-router Order Passport', status: 'order_passport_mvp', primaryMarket: 'United States', locales: { 'en-US': base + '/', 'zh-Hans': base + '/zh/', de: base + '/de/' }, updatedAt: '2026-10-11',
     purpose: 'An order passport and trust infrastructure for agent-assisted manufacturing. Post-labor is the long-term vision; manufacturing is the first market.',
     live: {
       website: base + '/', briefBuilder: base + '/#brief', localOrderPassport: base + '/#orders', briefApi: base + '/api/brief',
@@ -73,7 +73,7 @@
         if (typeof value !== 'string') throw new Error(key + ' must be text.');
         const text = value.trim();
         if (text.length < (definition.minLength || (schema.required.includes(key) ? 1 : 0)) || text.length > definition.maxLength) throw new Error('Check the length of ' + key + '.');
-        if (definition.pattern && !(new RegExp(definition.pattern)).test(text)) throw new Error('country must be a two-letter code, e.g. DE.');
+        if (definition.pattern && !(new RegExp(definition.pattern)).test(text)) throw new Error('country must be a two-letter code, e.g. US.');
         normalized[key] = key === 'country' ? text.toUpperCase() : text;
       }
     }

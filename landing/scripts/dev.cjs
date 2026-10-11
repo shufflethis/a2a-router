@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const aliases = { '/openapi.json': '/.well-known/openapi.json', '/.well-known/webmcp': '/.well-known/webmcp.json', '/.well-known/api-catalog': '/.well-known/api-catalog.json' };
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.txt': 'text/plain', '.svg': 'image/svg+xml', '.xml': 'application/xml' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.txt': 'text/plain', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.ttf': 'font/ttf' };
 http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
@@ -13,7 +13,9 @@ http.createServer(async (req, res) => {
       req.body = body; req.query = Object.fromEntries(url.searchParams);
       await require(path.join(root, url.pathname + '.js'))(req, res); return;
     }
-    const file = path.resolve(root, '.' + (aliases[url.pathname] || (url.pathname === '/' ? '/index.html' : decodeURIComponent(url.pathname))));
+    if (url.pathname === '/de' || url.pathname === '/zh') { res.writeHead(308, { Location: url.pathname + '/' }); return res.end(); }
+    const route = url.pathname.endsWith('/') ? url.pathname + 'index.html' : decodeURIComponent(url.pathname);
+    const file = path.resolve(root, '.' + (aliases[url.pathname] || route));
     if (!file.startsWith(root + '/') || !fs.existsSync(file) || !fs.statSync(file).isFile()) { res.writeHead(404); return res.end('Not found'); }
     res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream');
     fs.createReadStream(file).pipe(res);
