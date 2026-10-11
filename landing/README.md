@@ -5,6 +5,19 @@ a manufacturing brief and keeps a portable, self-reported order history locally
 in the browser. Factory attestations, a shared verified ledger and payments are
 planned. Vibe Manufacturing is an optional external RFQ handoff only.
 
+## Paid pilot inquiries
+
+`/#pilot` (also on `/de/` and `/zh/`) advertises a US$500 personally guided
+manufacturing order for the first cohort of three customers. This is a service
+offer; the browser-local Order Passport remains free. The operator confirms scope,
+timeline and fee in writing before an accepted project is invoiced.
+
+The primary contact link opens a localized email draft to the operator's published
+mailbox, `go@vibe-manufacturing.com`. Visitors review and send it in their mail app;
+the address is also visible for manual use in webmail. There is no lead-submission
+backend, automated notification, checkout or assertion that an inquiry was received.
+Local passports are never attached automatically. Handle inbound inquiries manually.
+
 ## Local checks
 
 No build step or runtime npm dependencies are required.
@@ -63,8 +76,8 @@ All pages share the same browser-local passports. `lib/i18n.js` localizes the UI
 machine field names and passport hashes remain unchanged. The no-JavaScript form
 keeps its locale through `/api/brief?lang=en|zh|de`.
 
-Run `python3 scripts/localize.py` after changing `de/index.html` or the translation
-catalogue in that script. English and Chinese content is generated as static HTML,
+Run `python3 scripts/localize.py` after changing `de/index.html`, the translation
+catalogue in that script, or `scripts/pilot-copy.tsv`. English and Chinese content is generated as static HTML,
 including canonical URLs, reciprocal hreflang links and localized structured data.
 The website uses locally hosted Fraunces and Space Mono fonts with included OFL
 licenses. Tracking loads asynchronously and does not block the product scripts.

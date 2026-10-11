@@ -41,7 +41,18 @@
       orderLedger: 'Persistent evidence-backed order events, delivery, acceptance, disputes and payment; not yet available.',
       settlement: 'Provider-managed milestone payments after buyer acceptance; no escrow or payments on this site today.'
     },
-    pilot: { targetFactories: '10–20', firstProcesses: Object.keys(processes), enrollmentOpen: false, verifiedFactoryCount: 0, recordedOrderCount: 0, note: 'No independently audited factories or production ledger orders are published here. Existing directory entries are not attestations.' },
+    pilot: {
+      name: 'Guided Manufacturing Pilot', inquiryStatus: 'open', enrollmentOpen: true,
+      targetCustomers: 3, primaryCustomers: 'Small US hardware teams and product studios',
+      firstProcesses: Object.keys(processes), price: { amount: 500, currency: 'USD', basis: 'One-time fee for one guided order; applicable taxes specified in the proposal.' },
+      scope: 'One part, one supplier, one order: a kickoff, structured brief, comparison of up to three buyer-provided quotes, milestone plan, acceptance checklist, and exportable order passport using buyer and supplier evidence.',
+      excludes: ['Manufacturing and shipping costs', 'Engineering design', 'Supplier sourcing', 'Independent quality inspection', 'Third-party inspection costs'],
+      inquiryUrl: base + '/#pilot', contactEmail: 'go@vibe-manufacturing.com', operator: 'FINAL MASTER LLC',
+      inquiryMethod: 'Email: the website opens a draft in the visitor’s mail app. The visitor must review and send it. No web submission or checkout.',
+      nextStep: 'Scope, timeline and fee confirmed in writing before the customer decides to proceed and receives an invoice. No charge or commitment to inquire.',
+      verifiedFactoryCount: 0, recordedOrderCount: 0,
+      note: 'Personally guided service. Supplier communication and payments happen outside the software. No completed pilots, independently audited factories or central production ledger orders are published here.'
+    },
     limitations: [
       'Brief preparation does not submit an RFQ, contact a manufacturer or take payment. Saving a local order is a separate human action.',
       'The published Trust-Pledge and signed Agent Card remain historical, self-attested bridge metadata.',

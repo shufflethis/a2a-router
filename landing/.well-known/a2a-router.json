@@ -21,7 +21,8 @@
     "requirements": "https://www.a2a-router.com/api/requirements",
     "brief": "https://www.a2a-router.com/api/brief",
     "webmcp": "https://www.a2a-router.com/.well-known/webmcp",
-    "apiCatalog": "https://www.a2a-router.com/.well-known/api-catalog"
+    "apiCatalog": "https://www.a2a-router.com/.well-known/api-catalog",
+    "pilot": "https://www.a2a-router.com/#pilot"
   },
   "protocols": {
     "a2a": {
@@ -53,8 +54,8 @@
   "contact": {
     "discussions": "https://github.com/shufflethis/a2a-router/discussions",
     "x": "https://x.com/wuebbe",
-    "direct": "X DM @wuebbe preferred",
-    "publicEmail": null
+    "direct": "Pilot inquiries: email go@vibe-manufacturing.com with your part, quantity, existing supplier or quotes, and target date.",
+    "publicEmail": "go@vibe-manufacturing.com"
   },
   "repository": "https://github.com/shufflethis/a2a-router",
   "limitations": [
@@ -71,16 +72,37 @@
     "settlement": "Provider-managed milestone payments after buyer acceptance; no escrow or payments on this site today."
   },
   "pilot": {
-    "targetFactories": "10–20",
+    "name": "Guided Manufacturing Pilot",
+    "inquiryStatus": "open",
+    "enrollmentOpen": true,
+    "targetCustomers": 3,
+    "primaryCustomers": "Small US hardware teams and product studios",
     "firstProcesses": [
       "cnc_machining",
       "sheet_metal",
       "additive_manufacturing"
     ],
-    "enrollmentOpen": false,
+    "price": {
+      "amount": 500,
+      "currency": "USD",
+      "basis": "One-time fee for one guided order; applicable taxes specified in the proposal."
+    },
+    "scope": "One part, one supplier, one order: a kickoff, structured brief, comparison of up to three buyer-provided quotes, milestone plan, acceptance checklist, and exportable order passport using buyer and supplier evidence.",
+    "excludes": [
+      "Manufacturing and shipping costs",
+      "Engineering design",
+      "Supplier sourcing",
+      "Independent quality inspection",
+      "Third-party inspection costs"
+    ],
+    "inquiryUrl": "https://www.a2a-router.com/#pilot",
+    "contactEmail": "go@vibe-manufacturing.com",
+    "operator": "FINAL MASTER LLC",
+    "inquiryMethod": "Email: the website opens a draft in the visitor’s mail app. The visitor must review and send it. No web submission or checkout.",
+    "nextStep": "Scope, timeline and fee confirmed in writing before the customer decides to proceed and receives an invoice. No charge or commitment to inquire.",
     "verifiedFactoryCount": 0,
     "recordedOrderCount": 0,
-    "note": "No independently audited factories or production ledger orders are published here. Existing directory entries are not attestations."
+    "note": "Personally guided service. Supplier communication and payments happen outside the software. No completed pilots, independently audited factories or central production ledger orders are published here."
   },
   "optionalHandoffs": {
     "manufacturingRequest": "https://vibe-manufacturing.com/request-quote",

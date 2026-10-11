@@ -5,6 +5,7 @@ from pathlib import Path
 from html import escape
 from html.parser import HTMLParser
 import json, re
+from urllib.parse import urlencode, quote
 
 # German source | US English | Simplified Chinese
 COPY = r'''a2a-router · Aufträge für die Agenten-Ökonomie|a2a-router · Order passports for the agent economy|a2a-router · 面向智能体经济的订单档案
@@ -182,6 +183,7 @@ z. B. Alle 10 Teile entsprechen der freigegebenen Zeichnung; Lochabstände werde
 Nur bekannte Vorgaben eintragen|Enter confirmed requirements only|仅填写已确认的要求
 z. B. entgratet, unbehandelt|e.g. deburred, unfinished|例如：去毛刺，未做表面处理
 z. B. Datum oder flexibel|e.g. a date or flexible|例如：具体日期或可协商'''
+COPY += '\n' + Path(__file__).with_name('pilot-copy.tsv').read_text().strip()
 TRANSLATIONS = {row.split('|')[0].strip(): row.split('|')[1:] for row in COPY.splitlines()}
 SHARED = {'a2a','/','router','A2A ⇄ MCP + WEBMCP','01','02','03','◆','↓','⇄','↗','a2a-router','{↗}','.','OpenAPI','llms.txt','GitHub ↗','https://…','EN','中文','DE'}
 
@@ -189,7 +191,7 @@ class Translate(HTMLParser):
     def __init__(self, locale): super().__init__(convert_charrefs=False); self.locale=locale; self.out=[]; self.script=False; self.missing=set()
     def tr(self, text):
         key=text.strip()
-        if not key or key in SHARED:return text
+        if not key or key in SHARED or key in {'US$500', 'go@vibe-manufacturing.com'}:return text
         if key not in TRANSLATIONS:self.missing.add(key);return text
         lead=text[:len(text)-len(text.lstrip())];tail=text[len(text.rstrip()):]
         return lead+TRANSLATIONS[key][0 if self.locale=='en' else 1]+tail
@@ -212,6 +214,18 @@ meta={
 'en':{'title':'a2a-router · Order passports for the agent economy','description':'Your agent coordinates. You define the outcome. Prepare a manufacturing brief, set acceptance criteria, and record the order history. Free Order Passport MVP with A2A, MCP, and WebMCP.','headline':'Your agent coordinates. You define the outcome.','ogDescription':'An order passport for agent-assisted manufacturing. Specs, acceptance criteria, and a portable order history.','vision':'Post-labor is the vision. Traceable manufacturing orders are the first product.','currency':'USD','ogLocale':'en_US'},
 'zh':{'title':'a2a-router · 面向智能体经济的订单档案','description':'让智能体协调流程，由你定义成果。准备制造要求、设定验收标准并记录订单进展。免费订单档案 MVP，支持 A2A、MCP 和 WebMCP。','headline':'让智能体协调流程，由你定义最终成果。','ogDescription':'面向智能体辅助制造的订单档案，包含规格、验收标准与可导出的订单记录。','vision':'后劳动社会是愿景，可追溯制造订单是首个产品。','currency':'CNY','ogLocale':'zh_CN'},
 'de':{'title':'a2a-router · Aufträge für die Agenten-Ökonomie','description':'Dein Agent organisiert. Du bestimmst das Ergebnis. Erstelle einen Fertigungs-Auftrags-Pass mit Abnahmekriterien und dokumentiere den Verlauf. Lokal nutzbarer MVP mit A2A, MCP und WebMCP.','headline':'Dein Agent organisiert. Du bestimmst das Ergebnis.','ogDescription':'Ein Auftrags-Pass für agentengestützte Fertigung. Spezifikation, Abnahme und Auftragshistorie in einem exportierbaren Dokument.','vision':'Post-Labor als Vision. Nachvollziehbare Fertigungsaufträge als erstes Produkt.','currency':'EUR','ogLocale':'de_DE'}}
+pilot_meta = {
+    'en': ('a2a-router · $500 manufacturing pilot', 'One manufacturing order. Clear specs, quote comparisons, and documented approvals. US$500 personally guided pilot for US hardware teams. Inquire before you commit.'),
+    'de': ('a2a-router · Fertigungs-Pilot für 500 US-Dollar', 'Ein Fertigungsauftrag mit klaren Vorgaben, Angebotsvergleich und dokumentierten Freigaben. Persönlich begleiteter Pilot für 500 US-Dollar. Unverbindlich anfragen.'),
+    'zh': ('a2a-router · 500 美元制造订单试点', '面向美国硬件团队的制造订单试点。专人协助梳理规格、比较报价并记录批准与验收，每个订单 500 美元。免费咨询，确认范围后再决定委托。')
+}
+pilot_mail = {
+    'en': ('a2a-router — US$500 pilot inquiry', 'Hi a2a-router,\n\nI am interested in the US$500 guided manufacturing pilot.\n\nName and company:\nPart and quantity:\nExisting supplier or quotes:\nWhat I need help with:\nTarget delivery date:\n\nPlease confirm the scope and timeline before any paid work.\n'),
+    'de': ('a2a-router — Pilotanfrage für 500 US-Dollar', 'Hallo a2a-router,\n\nich interessiere mich für den begleiteten Fertigungs-Pilot für 500 US-Dollar.\n\nName und Unternehmen:\nTeil und Stückzahl:\nVorhandener Anbieter oder Angebote:\nDabei brauche ich Unterstützung:\nGewünschter Liefertermin:\n\nBitte vor kostenpflichtigen Leistungen Umfang und Zeitraum bestätigen.\n'),
+    'zh': ('a2a-router — 500 美元试点咨询', '你好，a2a-router：\n\n我对 500 美元的专人协助制造订单试点感兴趣。\n\n姓名和公司：\n零件和数量：\n已有供应商或报价：\n需要协助的事项：\n期望交付日期：\n\n请在开始任何收费服务前确认范围和时间安排。\n')
+}
+for locale, (title, description) in pilot_meta.items():
+    meta[locale].update(title=title, description=description, headline=title, ogDescription=description, vision=description)
 source=Path('de/index.html').read_text()
 source=re.sub(r'<div class="language-switcher".*?</div>','',source)
 source=source.replace('<div class="header-actions">','').replace('</nav></div></header>','</nav></header>')
@@ -232,7 +246,13 @@ for locale in ['en','zh','de']:
         page=re.sub('<meta '+attr+' content="[^"]*">','<meta '+attr+' content="'+escape(m[key],quote=True)+'">',page)
     page=re.sub(r'<meta property="og:url"[^>]+>','<meta property="og:url" content="'+url+'"><meta property="og:locale" content="'+m['ogLocale']+'">',page)
     graph={'@context':'https://schema.org','@graph':[{'@type':'WebSite','name':'a2a-router','url':url,'inLanguage':langs[locale]},{'@type':'SoftwareApplication','name':'a2a-router Order Passport' if locale=='en' else 'a2a-router 订单档案' if locale=='zh' else 'a2a-router Auftrags-Pass','applicationCategory':'BusinessApplication','operatingSystem':'Web browser','url':url+'#brief','inLanguage':langs[locale],'description':m['description'],'offers':{'@type':'Offer','price':'0','priceCurrency':m['currency']}}]}
+    graph['@graph'].append({'@type':'Service','name':'a2a-router Guided Manufacturing Pilot','description':m['description'],'url':url+'#pilot','serviceType':'Personally guided coordination for one manufacturing order','areaServed':{'@type':'Country','name':'United States'},'provider':{'@type':'Organization','name':'FINAL MASTER LLC','email':'go@vibe-manufacturing.com'},'offers':{'@type':'Offer','price':'500','priceCurrency':'USD','url':url+'#pilot','description':'One guided order. Scope and timeline confirmed in writing before invoicing. Manufacturing and shipping costs are separate; applicable taxes are specified in the proposal.'}})
+    # The free software and the paid service are separate offers.
+    graph['@graph'][1]['description'] = {'en':'Free browser-local manufacturing briefs and order history.','de':'Kostenlose Fertigungsbriefe und lokale Auftragshistorie im Browser.','zh':'免费的浏览器本地制造要求与订单记录。'}[locale]
     page=re.sub(r'<script type="application/ld\+json">.*?</script>','<script type="application/ld+json">'+json.dumps(graph,ensure_ascii=False,separators=(',',':'))+'</script>',page)
+    subject, body = pilot_mail[locale]
+    mailto = 'mailto:go@vibe-manufacturing.com?' + urlencode({'subject':subject,'body':body}, quote_via=quote)
+    page=re.sub(r'data-pilot-contact(?:="")? href="[^"]*"','data-pilot-contact href="'+escape(mailto,quote=True)+'"',page)
     page=page.replace('<script defer src="/lib/manufacturing.js">','<script defer src="/lib/i18n.js"></script><script defer src="/lib/manufacturing.js">') if '/lib/i18n.js' not in page else page
     page=re.sub(r'action="/api/brief[^"]*"','action="/api/brief?lang='+locale+'"',page)
     page=page.replace('<nav aria-label=', '<div class="header-actions"><nav aria-label=',1)

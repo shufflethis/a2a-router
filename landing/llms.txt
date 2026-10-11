@@ -6,6 +6,8 @@
 US English is the default at https://www.a2a-router.com/. Simplified Chinese: https://www.a2a-router.com/zh/. German: https://www.a2a-router.com/de/. All three share the same browser-local order storage and machine interfaces.
 
 ## Live today
+- Paid Guided Manufacturing Pilot: US$500 one-time service fee for one part, one supplier and one order. Recruiting the first three paying pilot customers, primarily US hardware teams. Includes a kickoff, structured brief, comparison of up to three buyer-provided quotes, milestone plan, acceptance checklist and exportable order passport using buyer/supplier evidence. Manufacturing, shipping, engineering design, supplier sourcing and independent inspection are not included; applicable taxes are specified in the proposal.
+- Pilot inquiries: https://www.a2a-router.com/#pilot. Email go@vibe-manufacturing.com (FINAL MASTER LLC operator mailbox). The link opens a draft; the visitor must review and send it in their email app. No inquiry is submitted by the website. Scope, timeline and fee are confirmed in writing before the customer decides to proceed and receives an invoice. No charge to inquire. Do not claim a booking, payment or successful message delivery from opening the link.
 - Free manufacturing brief preparation for CNC machining, sheet metal and 3D printing.
 - Browser-local, self-reported order events with SHA-256 hash consistency checks, JSON export and import.
 - Read-only WebMCP tools: get_project_status, get_manufacturing_requirements, prepare_manufacturing_brief.
@@ -14,10 +16,11 @@ US English is the default at https://www.a2a-router.com/. Simplified Chinese: ht
 
 ## Main pages
 - [Product and brief builder](https://www.a2a-router.com/)
+- [US$500 guided pilot inquiry](https://www.a2a-router.com/#pilot)
 - [Agent documentation](https://www.a2a-router.com/agents.html)
 - [Current product status](https://www.a2a-router.com/api/status)
 - [Repository](https://github.com/shufflethis/a2a-router)
-- [Contact](https://x.com/wuebbe)
+- [Pilot contact](mailto:go@vibe-manufacturing.com)
 
 ## Machine interfaces
 - [OpenAPI 3.1](https://www.a2a-router.com/openapi.json)
