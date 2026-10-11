@@ -8,35 +8,23 @@ const PROTOCOL_VERSION = '2025-11-25';
 const SUPPORTED_PROTOCOL_VERSIONS = new Set(['2025-11-25', '2025-06-18', '2025-03-26']);
 const BASE_URL = 'https://www.a2a-router.com';
 
-const statusPayload = {
-  project: 'a2a-router',
-  status: 'pre_alpha_rfc',
-  live: {
-    website: `${BASE_URL}/`,
-    mcpEndpoint: `${BASE_URL}/api/mcp`,
-    mcpServerJson: `${BASE_URL}/server.json`,
-    a2aAgentCard: `${BASE_URL}/.well-known/agent-card.json`,
-    a2aJsonRpc: `${BASE_URL}/api/a2a`,
-    trustPledge: `${BASE_URL}/.well-known/trust-pledge.json`,
-    did: `${BASE_URL}/.well-known/did.json`,
-    jwks: `${BASE_URL}/.well-known/jwks.json`,
-    llms: `${BASE_URL}/llms.txt`
-  },
-  planned: {
-    registry: 'Agent registration and discovery API',
-    transactionRouter: 'Voluntary-tip settlement layer',
-    settlement: 'Stripe Connect and optional USDC payout flow'
-  },
-  limitations: [
-    'The bridge router only accepts public https:// targets.',
-    'Local, private, reserved, multicast, and documentation IP ranges are blocked.',
-    'The bridge does not persist credentials or sessions.',
-    'Streaming and push notifications are not implemented in this MVP.',
-    'It does not perform transaction settlement.'
-  ]
-};
+const { status: statusPayload, schema: briefSchema, requirements, prepareBrief } = require('../lib/manufacturing');
 
 const tools = [
+  {
+    name: 'a2a_router.manufacturing_requirements',
+    title: 'Manufacturing Requirements',
+    description: 'Read required fields, accepted drawing formats and process checks.',
+    inputSchema: { type: 'object', properties: { process: briefSchema.properties.process }, required: ['process'], additionalProperties: false },
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
+  },
+  {
+    name: 'a2a_router.prepare_manufacturing_brief',
+    title: 'Prepare Manufacturing Brief',
+    description: 'Validate and return a manufacturing draft. Does not persist, submit an RFQ, contact a manufacturer or pay. Never invent specifications.',
+    inputSchema: briefSchema,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
+  },
   {
     name: 'a2a_router.status',
     title: 'a2a-router Status',
@@ -257,9 +245,9 @@ function initializeResult(requestedVersion) {
     serverInfo: {
       name: 'io.github.shufflethis/a2a-router',
       title: 'a2a-router MCP Bridge Server',
-      version: '0.1.0',
+      version: '0.2.0',
       description:
-        'MCP bridge server exposing a2a-router status, Trust-Pledge metadata, A2A invocation, and MCP tool invocation.',
+        'a2a-router order passport tools and public A2A/MCP bridge. Factory audits, central ledger and payments are planned.',
       websiteUrl: BASE_URL
     },
     instructions:
@@ -275,8 +263,8 @@ function trustPledgeResult(includeDocuments) {
     jwks: `${BASE_URL}/.well-known/jwks.json`,
     agentCard: `${BASE_URL}/.well-known/agent-card.json`,
     signatureAlgorithm: 'EdDSA',
-    bridgeRuntimeAvailable: false,
-    mcpBridgeRuntimeAvailable: false
+    bridgeRuntimeAvailable: true,
+    mcpBridgeRuntimeAvailable: true
   };
 
   if (!includeDocuments) {
@@ -317,6 +305,13 @@ async function handleRpc(message) {
     case 'tools/call': {
       const toolName = params.name;
       const args = params.arguments || {};
+
+      if (toolName === 'a2a_router.manufacturing_requirements') {
+        return jsonRpcResult(id, textAndStructured(requirements(args.process)));
+      }
+      if (toolName === 'a2a_router.prepare_manufacturing_brief') {
+        return jsonRpcResult(id, textAndStructured(prepareBrief(args)));
+      }
 
       if (toolName === 'a2a_router.status') {
         return jsonRpcResult(

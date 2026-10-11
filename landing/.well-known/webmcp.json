@@ -1,0 +1,22 @@
+{
+  "name": "a2a-router",
+  "description": "Read product status and prepare a manufacturing brief. No request submission, persistence or payment.",
+  "tools": [
+    {
+      "name": "get_project_status",
+      "description": "Read current product status, endpoints and planned features."
+    },
+    {
+      "name": "get_manufacturing_requirements",
+      "description": "Read specifications and drawing formats for a manufacturing process."
+    },
+    {
+      "name": "prepare_manufacturing_brief",
+      "description": "Validate a manufacturing draft and return unresolved questions without side effects."
+    }
+  ],
+  "pages": [
+    "https://www.a2a-router.com/",
+    "https://www.a2a-router.com/agents.html"
+  ]
+}

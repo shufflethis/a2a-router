@@ -1,9 +1,9 @@
 {
   "name": "a2a-router",
   "url": "https://www.a2a-router.com",
-  "status": "pre_alpha_rfc",
-  "updatedAt": "2026-05-17",
-  "purpose": "Machine-readable discovery entrypoint for a2a-router, a post-discovery bridge and trust metadata layer for agent economies.",
+  "status": "order_passport_mvp",
+  "updatedAt": "2026-10-11",
+  "purpose": "An order passport and trust infrastructure for agent-assisted manufacturing. Post-labor is the long-term vision; manufacturing is the first market.",
   "endpoints": {
     "website": "https://www.a2a-router.com/",
     "llms": "https://www.a2a-router.com/llms.txt",
@@ -15,7 +15,13 @@
     "jwks": "https://www.a2a-router.com/.well-known/jwks.json",
     "trustPledge": "https://www.a2a-router.com/.well-known/trust-pledge.json",
     "a2aAgentCard": "https://www.a2a-router.com/.well-known/agent-card.json",
-    "a2aJsonRpc": "https://www.a2a-router.com/api/a2a"
+    "a2aJsonRpc": "https://www.a2a-router.com/api/a2a",
+    "productStatus": "https://www.a2a-router.com/api/status",
+    "openapi": "https://www.a2a-router.com/openapi.json",
+    "requirements": "https://www.a2a-router.com/api/requirements",
+    "brief": "https://www.a2a-router.com/api/brief",
+    "webmcp": "https://www.a2a-router.com/.well-known/webmcp",
+    "apiCatalog": "https://www.a2a-router.com/.well-known/api-catalog"
   },
   "protocols": {
     "a2a": {
@@ -50,16 +56,34 @@
     "direct": "X DM @wuebbe preferred",
     "publicEmail": null
   },
-  "contributions": {
-    "koFi": "https://ko-fi.com/a2amcp",
-    "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
-  },
   "repository": "https://github.com/shufflethis/a2a-router",
   "limitations": [
-    "No authenticated agent registry yet",
-    "No persistent routing sessions yet",
-    "No streaming bridge transport yet",
-    "No transaction settlement yet",
-    "Only public https:// targets are accepted"
-  ]
+    "Brief preparation does not submit an RFQ, contact a manufacturer or take payment. Saving a local order is a separate human action.",
+    "The published Trust-Pledge and signed Agent Card remain historical, self-attested bridge metadata.",
+    "Order events are self-reported and stored in the browser. No central verified ledger, factory audit, buyer protection or escrow service is available here yet.",
+    "Bridge calls accept public HTTPS targets only; private and reserved networks are blocked.",
+    "The bridge does not persist credentials or sessions; streaming and push notifications are not implemented."
+  ],
+  "product": "a2a-router Auftrags-Pass",
+  "planned": {
+    "factoryAttestations": "Paid evidence review of identity, capabilities and certificate scope; not yet available.",
+    "orderLedger": "Persistent evidence-backed order events, delivery, acceptance, disputes and payment; not yet available.",
+    "settlement": "Provider-managed milestone payments after buyer acceptance; no escrow or payments on this site today."
+  },
+  "pilot": {
+    "targetFactories": "10–20",
+    "firstProcesses": [
+      "cnc_machining",
+      "sheet_metal",
+      "additive_manufacturing"
+    ],
+    "enrollmentOpen": false,
+    "verifiedFactoryCount": 0,
+    "recordedOrderCount": 0,
+    "note": "No independently audited factories or production ledger orders are published here. Existing directory entries are not attestations."
+  },
+  "optionalHandoffs": {
+    "manufacturingRequest": "https://vibe-manufacturing.com/request-quote",
+    "note": "Optional external service; no automatic transfer."
+  }
 }

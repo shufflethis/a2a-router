@@ -1,0 +1,21 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.a2a-router.com/",
+      "service-desc": [
+        {
+          "href": "https://www.a2a-router.com/openapi.json",
+          "type": "application/json",
+          "title": "a2a-router OpenAPI 3.1"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.a2a-router.com/agents.html",
+          "type": "text/html",
+          "title": "Agent interface documentation"
+        }
+      ]
+    }
+  ]
+}

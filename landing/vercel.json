@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/openapi.json", "destination": "/.well-known/openapi.json" },
+    { "source": "/.well-known/webmcp", "destination": "/.well-known/webmcp.json" },
+    { "source": "/.well-known/api-catalog", "destination": "/.well-known/api-catalog.json" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+    ] },
+    { "source": "/.well-known/webmcp", "headers": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }] },
+    { "source": "/.well-known/api-catalog", "headers": [{ "key": "Content-Type", "value": "application/linkset+json" }] }
+  ]
+}

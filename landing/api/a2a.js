@@ -1,31 +1,9 @@
 const { callA2AAgent, callMcpTool, listMcpTools } = require('../lib/bridge');
 
 const STATUS_TEXT =
-  'a2a-router is live as a public website, documentation hub, Trust-Pledge draft, A2A status/bridge agent, and MCP bridge server. The registry runtime and transaction router are still planned.';
+  'a2a-router provides an order passport MVP for agent-assisted manufacturing, a local self-reported order history, REST/MCP/WebMCP brief preparation, and a public A2A/MCP bridge. Factory audits, a central verified ledger and settlement remain planned.';
 
-const statusPayload = {
-  project: 'a2a-router',
-  status: 'pre_alpha_rfc',
-  live: {
-    website: 'https://www.a2a-router.com/',
-    agentCard: 'https://www.a2a-router.com/.well-known/agent-card.json',
-    a2aJsonRpc: 'https://www.a2a-router.com/api/a2a',
-    mcpEndpoint: 'https://www.a2a-router.com/api/mcp',
-    mcpServerJson: 'https://www.a2a-router.com/server.json',
-    trustPledge: 'https://www.a2a-router.com/.well-known/trust-pledge.json',
-    did: 'https://www.a2a-router.com/.well-known/did.json',
-    llms: 'https://www.a2a-router.com/llms.txt'
-  },
-  planned: {
-    transactionRouter: 'Voluntary-tip settlement layer',
-    registry: 'Agent registration and discovery API'
-  },
-  bridge: {
-    mcpToA2A: 'MCP tool a2a_router.call_a2a_agent can invoke public A2A JSON-RPC agents.',
-    a2aToMcp: 'A2A SendMessage can invoke public MCP Streamable HTTP tools via structured bridge requests.',
-    guardrails: 'Only public https:// targets are accepted; local/private/reserved networks are blocked.'
-  }
-};
+const { status: statusPayload, schema: briefSchema, requirements, prepareBrief } = require('../lib/manufacturing');
 
 function sendJson(res, status, payload) {
   res.statusCode = status;

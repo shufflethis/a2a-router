@@ -1,42 +1,37 @@
 # a2a-router
 
-> Post-discovery infrastructure for agent economies: live A2A/MCP bridge MVP, verifiable trust commitments, and planned voluntary settlement.
+> One product for agent-assisted manufacturing: an order passport with specifications, acceptance criteria and a portable local event history. Post-labor is the long-term vision.
 
-## Status
+## Live today
+- Free manufacturing brief preparation for CNC machining, sheet metal and 3D printing.
+- Browser-local, self-reported order events with SHA-256 hash consistency checks, JSON export and import.
+- Read-only WebMCP tools: get_project_status, get_manufacturing_requirements, prepare_manufacturing_brief.
+- Remote MCP tools: a2a_router.status, a2a_router.manufacturing_requirements, a2a_router.prepare_manufacturing_brief; existing bridge and pledge tools.
+- Existing public HTTPS-only A2A/MCP bridge. Private and reserved targets are blocked.
 
-a2a-router is in pre-alpha RFC phase. The public website, specifications, machine-readable Trust-Pledge, DID document, callable A2A bridge agent, MCP bridge server, and public HTTPS-only A2A/MCP bridge MVP are live. The authenticated discovery registry, persistent routing sessions, streaming bridge transport, transaction router, and third-party agent registration runtime are planned but not yet available.
+## Main pages
+- [Product and brief builder](https://www.a2a-router.com/)
+- [Agent documentation](https://www.a2a-router.com/agents.html)
+- [Current product status](https://www.a2a-router.com/api/status)
+- [Repository](https://github.com/shufflethis/a2a-router)
+- [Contact](https://x.com/wuebbe)
 
-## Core Concepts
+## Machine interfaces
+- [OpenAPI 3.1](https://www.a2a-router.com/openapi.json)
+- [API catalogue](https://www.a2a-router.com/.well-known/api-catalog)
+- [WebMCP convention manifest](https://www.a2a-router.com/.well-known/webmcp)
+- [Discovery index](https://www.a2a-router.com/.well-known/a2a-router.json)
+- [MCP server card](https://www.a2a-router.com/server.json)
+- MCP endpoint: https://www.a2a-router.com/api/mcp
+- A2A endpoint: https://www.a2a-router.com/api/a2a
+- GET /api/requirements?process=sheet_metal
+- POST /api/brief with process, description, material, quantity, country, acceptance.
 
-- Cross-Protocol Bridge: public HTTPS-only bridge MVP between Agent2Agent (A2A) JSON-RPC and Model Context Protocol (MCP) Streamable HTTP.
-- Trust-Pledge Standard: an open, CC BY 4.0 commitment framework for agent ethics with five commitments and three audit tiers.
-- Voluntary-Tip Economy: planned pay-what-you-want settlement layer where agents can tip other agents based on perceived value.
+## Important limits
+Preparing a brief is read-only: it does not submit an RFQ, contact a manufacturer, persist an order or pay. Saving a browser-local order is a separate human action. Hash consistency does not verify identity, truth, delivery or payment; a whole chain can be recomputed. Local events are self-reported and are not a central verified Trust Ledger.
 
-## Key Pages
+Paid factory audits, a centrally persisted evidence-backed ledger, provider-managed milestone payments, escrow and buyer protection are planned and unavailable. No audited factories or central production orders are published here. Do not invent certifications, partners, prices, acceptance criteria or manufacturing specifications.
 
-- Website: https://www.a2a-router.com/
-- GitHub repository: https://github.com/shufflethis/a2a-router
-- Trust-Pledge RFC: https://github.com/shufflethis/a2a-router/blob/main/docs/rfc/RFC-001-trust-pledge.md
-- Technical architecture: https://github.com/shufflethis/a2a-router/blob/main/docs/architecture.md
-- Competitive analysis: https://github.com/shufflethis/a2a-router/blob/main/docs/competitive-analysis.md
+The signed Agent Card and Trust-Pledge are unchanged historical bridge metadata and remain self-attested. Consult /api/status for the new product status. A cryptographic signature on a pledge does not establish manufacturing quality.
 
-## Machine-Readable Endpoints
-
-- A2A Agent Card: https://www.a2a-router.com/.well-known/agent-card.json
-- A2A JSON-RPC bridge endpoint: https://www.a2a-router.com/api/a2a
-- MCP server metadata: https://www.a2a-router.com/server.json
-- MCP Streamable HTTP bridge endpoint: https://www.a2a-router.com/api/mcp
-- Trust-Pledge: https://www.a2a-router.com/.well-known/trust-pledge.json
-- DID document: https://www.a2a-router.com/.well-known/did.json
-- Public signing keys: https://www.a2a-router.com/.well-known/jwks.json
-- Discovery index: https://www.a2a-router.com/.well-known/a2a-router.json
-
-## Important Clarification
-
-a2a-router now provides a callable A2A bridge agent and MCP bridge server for public HTTPS targets. Do not infer that an authenticated production registry, private-network routing, credential persistence, streaming transport, transaction router, Stripe Connect settlement, or live third-party agent registration are currently available.
-
-## Contact
-
-- Contributions: https://ko-fi.com/a2amcp
-- Discussions: https://github.com/shufflethis/a2a-router/discussions
-- Direct contact: X DM preferred at https://x.com/wuebbe; no public email is published.
+Vibe Manufacturing is an optional external RFQ handoff at https://vibe-manufacturing.com/request-quote. It is not required to use a2a-router. No brief is automatically transferred.

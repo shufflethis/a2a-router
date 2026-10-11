@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "a2a-router Bridge API",
-    "description": "Public HTTPS-only A2A/MCP bridge MVP for a2a-router. Authenticated registry, streaming transport, and settlement are planned but not live.",
-    "version": "0.1.0",
+    "title": "a2a-router Order Passport & Bridge API",
+    "description": "Manufacturing brief preparation and public A2A/MCP bridge. Briefs are drafts, not submitted orders. Local browser passports are self-reported. Factory audits, central verified ledger and payments are planned.",
+    "version": "0.2.0",
     "contact": {
       "name": "a2a-router",
       "url": "https://x.com/wuebbe",
@@ -14,11 +14,7 @@
       "name": "MIT",
       "url": "https://github.com/shufflethis/a2a-router/blob/main/LICENSE"
     },
-    "x-status": "bridge-mvp-live",
-    "x-contributions": {
-      "koFi": "https://ko-fi.com/a2amcp",
-      "note": "Financial contributions do not affect Trust-Pledge audit status, bridge routing, or future listing decisions."
-    }
+    "x-status": "order-passport-mvp"
   },
   "servers": [
     {
@@ -27,83 +23,419 @@
     }
   ],
   "tags": [
-    { "name": "discovery", "description": "Machine-readable agent, MCP, DID, and Trust-Pledge metadata" },
-    { "name": "bridge", "description": "Cross-protocol A2A and MCP bridge calls" },
-    { "name": "trust", "description": "Trust-Pledge verification and self-attestation metadata" }
+    {
+      "name": "discovery",
+      "description": "Machine-readable agent, MCP, DID, and Trust-Pledge metadata"
+    },
+    {
+      "name": "bridge",
+      "description": "Cross-protocol A2A and MCP bridge calls"
+    },
+    {
+      "name": "trust",
+      "description": "Trust-Pledge verification and self-attestation metadata"
+    },
+    {
+      "name": "manufacturing",
+      "description": "Read requirements and prepare a validated draft without submission or order storage."
+    }
   ],
   "paths": {
     "/.well-known/agent-card.json": {
       "get": {
         "summary": "Get the public A2A Agent Card",
-        "tags": ["discovery"],
-        "responses": { "200": { "description": "A2A Agent Card" } }
+        "tags": [
+          "discovery"
+        ],
+        "responses": {
+          "200": {
+            "description": "A2A Agent Card"
+          }
+        }
       }
     },
     "/.well-known/a2a-router.json": {
       "get": {
         "summary": "Get the a2a-router discovery index",
-        "tags": ["discovery"],
-        "responses": { "200": { "description": "Discovery index" } }
+        "tags": [
+          "discovery"
+        ],
+        "responses": {
+          "200": {
+            "description": "Discovery index"
+          }
+        }
       }
     },
     "/.well-known/trust-pledge.json": {
       "get": {
         "summary": "Get the signed Trust-Pledge",
-        "tags": ["trust"],
-        "responses": { "200": { "description": "Self-attested Trust-Pledge with detached JWS signature" } }
+        "tags": [
+          "trust"
+        ],
+        "responses": {
+          "200": {
+            "description": "Self-attested Trust-Pledge with detached JWS signature"
+          }
+        }
       }
     },
     "/.well-known/did.json": {
       "get": {
         "summary": "Get the DID document",
-        "tags": ["trust"],
-        "responses": { "200": { "description": "did:web DID document" } }
+        "tags": [
+          "trust"
+        ],
+        "responses": {
+          "200": {
+            "description": "did:web DID document"
+          }
+        }
       }
     },
     "/.well-known/jwks.json": {
       "get": {
         "summary": "Get public signing keys",
-        "tags": ["trust"],
-        "responses": { "200": { "description": "JWKS for Trust-Pledge and Agent Card signatures" } }
+        "tags": [
+          "trust"
+        ],
+        "responses": {
+          "200": {
+            "description": "JWKS for Trust-Pledge and Agent Card signatures"
+          }
+        }
       }
     },
     "/server.json": {
       "get": {
         "summary": "Get MCP server metadata",
-        "tags": ["discovery"],
-        "responses": { "200": { "description": "MCP remote server metadata" } }
+        "tags": [
+          "discovery"
+        ],
+        "responses": {
+          "200": {
+            "description": "MCP remote server metadata"
+          }
+        }
       }
     },
     "/api/mcp": {
       "post": {
         "summary": "Call the MCP Streamable HTTP bridge endpoint",
-        "tags": ["bridge"],
-        "description": "Supports initialize, tools/list, and tools/call for a2a_router.status, a2a_router.trust_pledge, a2a_router.call_a2a_agent, a2a_router.list_mcp_tools, and a2a_router.call_mcp_tool.",
+        "tags": [
+          "bridge"
+        ],
+        "description": "Supports initialize, tools/list and tools/call: manufacturing requirements, manufacturing brief preparation, project status, pledge and public A2A/MCP bridging. No order is submitted by brief tools.",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "type": "object" }
+              "schema": {
+                "type": "object"
+              }
             }
           }
         },
-        "responses": { "200": { "description": "JSON-RPC response" } }
+        "responses": {
+          "200": {
+            "description": "JSON-RPC response"
+          }
+        }
       }
     },
     "/api/a2a": {
       "post": {
         "summary": "Call the A2A JSON-RPC bridge endpoint",
-        "tags": ["bridge"],
+        "tags": [
+          "bridge"
+        ],
         "description": "Supports project status responses and structured SendMessage bridge calls to public HTTPS MCP or A2A targets.",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "type": "object" }
+              "schema": {
+                "type": "object"
+              }
             }
           }
         },
-        "responses": { "200": { "description": "JSON-RPC response" } }
+        "responses": {
+          "200": {
+            "description": "JSON-RPC response"
+          }
+        }
+      }
+    },
+    "/api/status": {
+      "get": {
+        "operationId": "getProjectStatus",
+        "summary": "Read current product status and live/planned capabilities",
+        "tags": [
+          "manufacturing"
+        ],
+        "responses": {
+          "200": {
+            "description": "Current status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/requirements": {
+      "get": {
+        "operationId": "getManufacturingRequirements",
+        "summary": "Read specifications and file formats for a manufacturing process",
+        "tags": [
+          "manufacturing"
+        ],
+        "parameters": [
+          {
+            "name": "process",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cnc_machining",
+                "sheet_metal",
+                "additive_manufacturing"
+              ],
+              "description": "Manufacturing process."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Process requirements",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/brief": {
+      "post": {
+        "operationId": "prepareManufacturingBrief",
+        "summary": "Prepare a manufacturing draft; no RFQ submission or persistence",
+        "tags": [
+          "manufacturing"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturingBriefInput"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ManufacturingBriefInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validated draft as JSON, or HTML review for a standard form submission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreparedBrief"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Use POST"
+          },
+          "415": {
+            "description": "Unsupported content type"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ManufacturingBriefInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process": {
+            "type": "string",
+            "enum": [
+              "cnc_machining",
+              "sheet_metal",
+              "additive_manufacturing"
+            ],
+            "description": "Manufacturing process."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 2000,
+            "description": "What the part does, dimensions and constraints. Never invent specifications."
+          },
+          "material": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "country": {
+            "type": "string",
+            "pattern": "^[A-Za-z]{2}$",
+            "description": "Two-letter destination country code, e.g. DE."
+          },
+          "acceptance": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000,
+            "description": "How the buyer will check and accept the delivered parts."
+          },
+          "tolerance": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "finish": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "deadline": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "drawingUrl": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Optional https drawing link. This tool does not fetch it."
+          }
+        },
+        "required": [
+          "process",
+          "description",
+          "material",
+          "quantity",
+          "country",
+          "acceptance"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "PreparedBrief": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "const": "draft_only"
+          },
+          "submitted": {
+            "type": "boolean",
+            "const": false
+          },
+          "persisted": {
+            "type": "boolean",
+            "const": false
+          },
+          "brief": {
+            "$ref": "#/components/schemas/ManufacturingBriefInput"
+          },
+          "requiredFiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "processChecks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unresolved": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nextStep": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "instruction": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "status",
+          "submitted",
+          "persisted",
+          "brief",
+          "requiredFiles",
+          "processChecks",
+          "unresolved",
+          "nextStep"
+        ]
       }
     }
   }
